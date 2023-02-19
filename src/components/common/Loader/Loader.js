@@ -3,7 +3,7 @@ import React from "react";
 export const Loader = () => {
   return (
     <div
-      id="fixed z-[100] w-full h-[100vh] left-0 top-0"
+      className="fixed z-[100] w-full h-[100vh] left-0 top-0 bg-opacity-25"
       style={{ background: "rgba(0, 0, 0, 0.6)" }}
     >
       <div className="h-[100vh] flex justify-center items-center">
