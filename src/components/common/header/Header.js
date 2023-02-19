@@ -23,7 +23,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="p-5 flex justify-between bg-red-50">
+      <header className="p-5 flex justify-between shadow-lg">
         <h1>
           Welcome <strong>{user?.user?.name}</strong>
         </h1>
