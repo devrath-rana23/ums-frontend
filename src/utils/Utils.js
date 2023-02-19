@@ -1,26 +1,10 @@
 import { config } from "./config/Config";
-import { constantText } from "./constants/ConstantText";
 import { appStorageService } from "./services/storage/Storage";
-import ImageUrls from "./constants/ImageUrls";
 
 export const Logout = (callBack = () => {}) => {
   appStorageService.local.remove(config.appName);
   callBack(null);
   window.location.href = "/";
-};
-
-export const calcRemainingWeeks = (date) => {
-  const d1 = new Date();
-  const d2 = new Date(date);
-  return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
-};
-
-export const formatBooleanYesNo = (value) => {
-  return Boolean(value) ? constantText.yes : constantText.no;
-};
-
-export const formatBoolActiveInactive = (value) => {
-  return Boolean(value) ? constantText.active : constantText.inActive;
 };
 
 export const createQueryParams = (Obj) => {
@@ -36,43 +20,6 @@ export const createQueryParams = (Obj) => {
     }
   });
   return queryParams;
-};
-
-export const parseSchema = (schema) => {
-  return JSON.parse(JSON.stringify(schema));
-};
-
-export const upperCaseStringFirstLetter = (str = "") => {
-  const arr = str.split(" ");
-  for (let i = 0; i < arr.length; i++) {
-    arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-  }
-  return arr.join(" ");
-};
-
-export const sortArray = (keyText, array = []) => {
-  try {
-    return array.sort((a, b) =>
-      keyText ? a[keyText].localeCompare(b[keyText]) : a.localeCompare(b)
-    );
-  } catch (error) {
-    return [];
-  }
-};
-
-export const imageOnError = (
-  { currentTarget },
-  defaultSrc = ImageUrls.profile
-) => {
-  currentTarget.onerror = null; // prevents looping
-  currentTarget.src = defaultSrc;
-};
-
-export const formatArrayToCommaSeprated = (array, key) => {
-  array = array.map((element) => {
-    return element[key];
-  });
-  return array.join(", ");
 };
 
 const safeUrlPattern =

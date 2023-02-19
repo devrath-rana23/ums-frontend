@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { appStorageService } from "../../../utils/services/storage/Storage";
 import { config } from "../../../utils/config/Config";
+import { Header } from "../../common/header";
 
 export const Authorized = (props) => {
   const userDetails = appStorageService.local.get(config.appName);
@@ -13,6 +14,7 @@ export const Authorized = (props) => {
     props.children ?? (
       <React.Fragment>
         <div className="min-h-screen" style={{ background: "#f9fafb" }}>
+          <Header />
           <Outlet />
         </div>
       </React.Fragment>

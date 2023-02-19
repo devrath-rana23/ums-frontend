@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Router } from "./Router";
 import { appStorageService } from "./utils/services/storage/Storage";
 import { config } from "./utils/config/Config";
@@ -12,7 +12,7 @@ export const App = () => {
   const [user, setUser] = useState(
     userDetails.access_token ? userDetails : null
   );
-  const authContextValue = { user, setUser };
+  const authContextValue = useMemo(() => ({ user, setUser }), [user]);
 
   return (
     <AuthContext.Provider value={authContextValue}>
