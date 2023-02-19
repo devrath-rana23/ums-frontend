@@ -50,10 +50,10 @@ const ComponentCopy = class Component extends React.Component {
 
   hide() {
     this.count = this.count - 1;
-    if (this.count < 0) {
-      this.forceUpdate();
+    if (!this.count >= 0) {
+      this.count = 0;
     }
-    this.count = 0;
+    this.forceUpdate();
   }
 
   hideAll() {

@@ -1,12 +1,10 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { appStorageService } from "../../../utils/services/storage/Storage";
-import { config } from "../../../utils/config/Config";
 import { Header } from "../../common/header";
+import { isAuthenticated } from "../../../utils/Utils";
 
 export const Authorized = (props) => {
-  const userDetails = appStorageService.local.get(config.appName);
-  if (!userDetails) {
+  if (!isAuthenticated()) {
     return <Navigate to={"/auth"} replace />;
   }
 

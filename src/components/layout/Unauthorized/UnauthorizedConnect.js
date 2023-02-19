@@ -1,10 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../../hooks";
+import { isAuthenticated } from "../../../utils/Utils";
 import { Unauthorized } from "./Unauthorized";
 
 export const UnauthorizedConnect = () => {
-  const { user } = useAuth();
-  if (user) {
+  if (isAuthenticated()) {
     return <Navigate to={"/dashboard"} replace />;
   }
 

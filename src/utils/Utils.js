@@ -1,7 +1,14 @@
 import { config } from "./config/Config";
+import { apiCall } from "./services/api/api";
+import { apiConstants } from "./services/api/apiEndpoints";
 import { appStorageService } from "./services/storage/Storage";
 
-export const Logout = (callBack = () => {}) => {
+export const isAuthenticated = () => !!((appStorageService.local.get(config.appName) || {}).access_token);
+
+export const Logout = async (callBack = () => {}) => {
+  const logoutDataRes = await apiCall(apiConstants.authLogout, {
+    loader: true,
+  });
   appStorageService.local.remove(config.appName);
   callBack(null);
   window.location.href = "/";
