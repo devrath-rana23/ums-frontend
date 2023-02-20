@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks";
 import { config } from "../../utils/config/Config";
 import { apiCall } from "../../utils/services/api/api";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
@@ -9,6 +10,7 @@ import { Loader } from "../common/Loader/Loader";
 export const AuthCallback = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const {setUser} = useAuth();
   useEffect(() => {
     getUserDetails();
   }, []);
@@ -20,6 +22,7 @@ export const AuthCallback = () => {
       queryParams: params,
     });
     if (authCallbackDataRes?.status === 200) {
+      setUser(authCallbackDataRes || "");
       appStorageService.local.set(config.appName, authCallbackDataRes || "");
       navigate("/dashboard");
     } else {
