@@ -12,13 +12,14 @@ export const Header = () => {
     { name: "User Management", link: "/user", active: false },
   ]);
 
-  const handleClick = (indexR) => {
+  const handleClick = (indexR, item) => {
     const headerLinksCopy = headerLinks.map((item, index) => {
       return index === indexR
         ? { ...item, active: true }
         : { ...item, active: false };
     });
     setHeaderLinks(headerLinksCopy);
+    navigate(item.link);
   };
 
   return (
@@ -33,13 +34,12 @@ export const Header = () => {
         <ul className="flex justify-between gap-20 items-center">
           {headerLinks.map((item, index) => (
             <li
-              onClick={() => handleClick(index)}
+              onClick={() => handleClick(index, item)}
               key={index}
-              className={`hover:text-orange-500 cursor-pointer ${
-                item.active ? "text-orange-500" : ""
-              }`}
+              className={`hover:text-orange-500 cursor-pointer ${item.active ? "text-orange-500" : ""
+                }`}
             >
-              <span onClick={() => navigate(item.link)}>{item.name}</span>
+              <span>{item.name}</span>
             </li>
           ))}
           <li

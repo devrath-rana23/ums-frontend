@@ -16,6 +16,10 @@ export const apiEndpoints = {
     url: "/v1/employee",
     method: "get",
   },
+  employeeCreate: {
+    url: "/v1/employee",
+    method: "post",
+  },
 };
 
 export const apiConstants = Object.keys(apiEndpoints).reduce((cb, iv) => {
