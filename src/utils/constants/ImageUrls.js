@@ -5,12 +5,12 @@
  * @flow
  */
 const ImageUrls = {
-  profile: require("../../assets/images/profile.png").default,
+  profile: require("../../assets/images/profile.png"),
   searchIcon: require("../../assets/images/searchIcon.svg").default,
   addSkill: require("../../assets/images/add-skill.svg").default,
   upDownForSelect: require("../../assets/images/updownforselect.svg").default,
-  closeIconForSelect: require("../../assets/images/closeiconforselect.svg")
-    .default,
+  closeIconForSelect: require("../../assets/images/closeiconforselect.svg").default,
+  close: require("../../assets/images/close.svg").default,
   logo: require("../../assets/images/logo.svg").default,
   bell: require("../../assets/images/bell.svg").default,
   avatarPlaceholder: require("../../assets/images/avatar_placeholder.svg")
