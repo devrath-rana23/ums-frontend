@@ -24,7 +24,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="p-5 flex justify-between shadow-lg sticky top-0 bg-white">
+      <header className="p-5 flex justify-between shadow-lg sticky top-0 bg-white items-center">
         <h1>
           Welcome <strong>{user?.user?.name}</strong>
         </h1>

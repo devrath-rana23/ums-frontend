@@ -94,35 +94,35 @@ export const User = () => {
         <div className="flex flex-end gap-[1rem] my-[15px]">
           <button
             type="button"
-            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-blue-100 text-blue-900"
+            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
             onClick={openModal}
           >
             Create user
           </button>
           <button
             type="button"
-            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-blue-100 text-blue-900"
+            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
             onClick={openSkillModal}
           >
             Create skill
           </button>
           <button
             type="button"
-            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-blue-100 text-blue-900"
+            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
             onClick={openRoleModal}
           >
             Create role
           </button>
           <button
             type="button"
-            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-blue-100 text-blue-900"
+            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
             onClick={openRoleListModal}
           >
             Show roles
           </button>
           <button
             type="button"
-            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-blue-100 text-blue-900"
+            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
             onClick={openSkillListModal}
           >
             Show skills
@@ -130,7 +130,7 @@ export const User = () => {
         </div>
         <table className="w-4/5 table-fixed mx-auto my-0 p-0 border-collapse">
           <thead>
-            <tr className="bg-indigo-700 text-white bg-[#ffffff90] border p-2.5 border-solid border-[#ddd]">
+            <tr className="bg-orange-500 text-white border p-2.5 border-solid border-[#ddd]">
               <th className="text-xl tracking-widest capitalize text-center p-5" >Name</th>
               <th className="text-xl tracking-widest capitalize text-center p-5" >Role</th>
               <th className="text-xl tracking-widest capitalize text-center p-5" >Status</th>
@@ -147,7 +147,7 @@ export const User = () => {
                   <td className="text-center p-5" data-label="Action">
                     <button
                       type="button"
-                      className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-blue-100 text-blue-900"
+                      className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
                       onClick={() => editHandler(item.id)}
                     >
                       Edit
@@ -156,7 +156,7 @@ export const User = () => {
                   <td className="text-center p-5" data-label="Action">
                     <button
                       type="button"
-                      className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-blue-100 text-blue-900"
+                      className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
                       onClick={() => deleteHandler(item.id)}
                     >
                       Delete
@@ -216,7 +216,7 @@ export const User = () => {
                           <img className="w-[143px] h-auto" src={ImageUrls.avatarPlaceholder} alt="avatarPlaceholder" />
                           <button
                             type="button"
-                            className="mt-[15.99px] flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-blue-100 text-blue-900"
+                            className="mt-[15.99px] flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
                             onClick={closeModal}
                           >
                             Upload
@@ -226,31 +226,21 @@ export const User = () => {
                           <div className="flex gap-2">
                             <div className="flex flex-col" >
                               <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Name</label>
-                              <input type={"text"} name={"name"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                              <input type={"text"} name={"employee_name"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
                             </div>
                             <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Contact</label>
-                              <input type={"text"} name={"name"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
-                            </div>
-                          </div>
-                          <div className="flex gap-2">
-                            <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Name</label>
-                              <input type={"text"} name={"name"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
-                            </div>
-                            <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Contact</label>
-                              <input type={"text"} name={"name"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Role</label>
+                              <input type={"text"} name={"role_id"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
                             </div>
                           </div>
                           <div className="flex gap-2">
                             <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Name</label>
-                              <input type={"text"} name={"name"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Salary</label>
+                              <input type={"text"} name={"salary"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
                             </div>
                             <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Contact</label>
-                              <input type={"text"} name={"name"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Phone</label>
+                              <input type={"text"} name={"phone"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
                             </div>
                           </div>
                         </div>
@@ -260,15 +250,10 @@ export const User = () => {
                     <section className="mx-8">
                       <div className="flex flex-col gap-8">
                         <div className="flex flex-col" >
-                          <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Contact</label>
-                          <input type={"text"} name={"name"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
-                        </div>
-                        <div className="flex flex-col" >
-                          <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Contact</label>
-                          <input type={"text"} name={"name"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                          <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Email</label>
+                          <input type={"text"} name={"email"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
                         </div>
                       </div>
-
                     </section>
                   </body>
                   <footer className="p-8">
@@ -282,7 +267,7 @@ export const User = () => {
                       </button>
                       <button
                         type="button"
-                        className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-blue-100 text-blue-900"
+                        className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
                         onClick={closeModal}
                       >
                         Save
