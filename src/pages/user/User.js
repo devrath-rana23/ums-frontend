@@ -5,8 +5,6 @@ import "./User.css";
 import { useNavigate } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import { CreateSkillModal } from "../../components/user/CreateSkillModal";
-import { CreateRoleModal } from "../../components/user/CreateRoleModal";
-import { ListRoleModal } from "../../components/user/ListRoleModal";
 import { ListSkillModal } from "../../components/user/ListSkillModal";
 import ImageUrls from "../../utils/constants/ImageUrls";
 
@@ -36,28 +34,12 @@ export const User = () => {
     setShowCreateSkill(false);
   }
 
-  const closeRoleModal = () => {
-    setShowCreateRole(false);
-  }
-
   const openSkillModal = () => {
     setShowCreateSkill(true);
   }
 
-  const openRoleModal = () => {
-    setShowCreateRole(true);
-  }
-
-  const openRoleListModal = () => {
-    setShowListRole(true);
-  }
-
   const openSkillListModal = () => {
     setShowListSkill(true);
-  }
-
-  const closeRoleListModal = () => {
-    setShowListRole(false);
   }
 
   const closeSkillListModal = () => {
@@ -105,20 +87,6 @@ export const User = () => {
             onClick={openSkillModal}
           >
             Create skill
-          </button>
-          <button
-            type="button"
-            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-            onClick={openRoleModal}
-          >
-            Create role
-          </button>
-          <button
-            type="button"
-            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-            onClick={openRoleListModal}
-          >
-            Show roles
           </button>
           <button
             type="button"
@@ -239,7 +207,17 @@ export const User = () => {
                               <input type={"text"} name={"salary"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
                             </div>
                             <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Phone</label>
+                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Bonus</label>
+                              <input type={"text"} name={"phone"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <div className="flex flex-col" >
+                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Date of Birth</label>
+                              <input type={"text"} name={"salary"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                            </div>
+                            <div className="flex flex-col" >
+                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Marital Status</label>
                               <input type={"text"} name={"phone"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
                             </div>
                           </div>
@@ -251,6 +229,14 @@ export const User = () => {
                       <div className="flex flex-col gap-8">
                         <div className="flex flex-col" >
                           <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Email</label>
+                          <input type={"text"} name={"email"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                        </div>
+                        <div className="flex flex-col" >
+                          <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Phone</label>
+                          <input type={"text"} name={"email"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                        </div>
+                        <div className="flex flex-col" >
+                          <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Skills</label>
                           <input type={"text"} name={"email"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
                         </div>
                       </div>
@@ -281,8 +267,6 @@ export const User = () => {
         </Dialog>
       </Transition>
       {showCreateSkill && <CreateSkillModal showCreateSkill={showCreateSkill} closeSkillModal={closeSkillModal} />}
-      {showCreateRole && <CreateRoleModal showCreateRole={showCreateRole} closeRoleModal={closeRoleModal} />}
-      {showListRole && <ListRoleModal showListRole={showListRole} closeRoleListModal={closeRoleListModal} />}
       {showListSkill && <ListSkillModal showListSkill={showListSkill} closeSkillListModal={closeSkillListModal} />}
     </>
   );
