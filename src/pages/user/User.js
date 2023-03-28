@@ -96,12 +96,19 @@ export const User = () => {
             Show skills
           </button>
         </div>
-        <table className="w-4/5 table-fixed mx-auto my-0 p-0 border-collapse">
+        <table className="table-fixed mx-auto my-0 p-0 border-collapse">
           <thead>
             <tr className="bg-orange-500 text-white border p-2.5 border-solid border-[#ddd]">
               <th className="text-xl tracking-widest capitalize text-center p-5" >Name</th>
               <th className="text-xl tracking-widest capitalize text-center p-5" >Role</th>
               <th className="text-xl tracking-widest capitalize text-center p-5" >Status</th>
+              <th className="text-xl tracking-widest capitalize text-center p-5" >Date of Birth</th>
+              <th className="text-xl tracking-widest capitalize text-center p-5" >Salary</th>
+              <th className="text-xl tracking-widest capitalize text-center p-5" >Marital Status</th>
+              <th className="text-xl tracking-widest capitalize text-center p-5" >Skills</th>
+              <th className="text-xl tracking-widest capitalize text-center p-5" >Bonus</th>
+              <th className="text-xl tracking-widest capitalize text-center p-5" >Phone</th>
+              <th className="text-xl tracking-widest capitalize text-center p-5" >Email</th>
               <th className="text-xl tracking-widest capitalize text-center p-5" colSpan={2}>Action</th>
             </tr>
           </thead>
@@ -110,8 +117,15 @@ export const User = () => {
               employeesData.map((item, index) => (
                 <tr key={index} className="bg-[#ffffff90] border p-2.5 border-solid border-[#ddd]">
                   <td className="text-center p-5" data-label="Name">{item.name}</td>
-                  <td className="text-center p-5" data-label="Role">{item.role_id}</td>
+                  <td className="text-center p-5" data-label="Role">{item.role.name}</td>
                   <td className="text-center p-5" data-label="Status">{item.status === 1 ? "Active" : "In active"}</td>
+                  <td className="text-center p-5" data-label="Date of Birth">{item.employee.birth ?? ""}</td>
+                  <td className="text-center p-5" data-label="Salary">{item.employee.salary}</td>
+                  <td className="text-center p-5" data-label="Marital Status">{item.employee.martial_status}</td>
+                  <td className="text-center p-5" data-label="Skills">{item.employee.skills}</td>
+                  <td className="text-center p-5" data-label="Bonus">{item.employee.bonus ?? ""}</td>
+                  <td className="text-center p-5" data-label="Phone">{item.employee.contact_info.phone}</td>
+                  <td className="text-center p-5" data-label="Email">{item.employee.contact_info.email}</td>
                   <td className="text-center p-5" data-label="Action">
                     <button
                       type="button"
