@@ -96,8 +96,8 @@ export const User = () => {
             Show skills
           </button>
         </div>
-        <table className="table-fixed mx-auto my-0 p-0 border-collapse">
-          <thead>
+        <table className="user-table table-fixed mx-auto my-0 p-0 border-collapse">
+          <thead className="user-thead">
             <tr className="bg-orange-500 text-white border p-2.5 border-solid border-[#ddd]">
               <th className="text-xl tracking-widest capitalize text-center p-5" >Name</th>
               <th className="text-xl tracking-widest capitalize text-center p-5" >Role</th>

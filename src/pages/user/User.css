@@ -1,13 +1,13 @@
 @media screen and (max-width: 600px) {
-    table {
+    .user-table {
         border: 0;
     }
 
-    .thead {
+    .user-thead {
         color: #fff;
     }
 
-    table thead {
+    .user-table thead {
         border: none;
         clip: rect(0 0 0 0);
         height: 1px;
@@ -18,27 +18,27 @@
         width: 1px;
     }
 
-    table tr {
+    .user-table tr {
         border-bottom: 3px solid #ddd;
         display: block;
         margin-bottom: .625em;
     }
 
-    table td {
+    .user-table td {
         border-bottom: 1px solid #ddd;
         display: block;
         font-size: .8em;
         text-align: right;
     }
 
-    table td::before {
+    .user-table td::before {
         content: attr(data-label);
         float: left;
         font-weight: bold;
         text-transform: uppercase;
     }
 
-    table td:last-child {
+    .user-table td:last-child {
         border-bottom: 0;
     }
 }
