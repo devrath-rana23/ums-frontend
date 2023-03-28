@@ -1,6 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { constantText } from "../../utils/constants/ConstantText";
 import ImageUrls from "../../utils/constants/ImageUrls";
+import { apiCall } from "../../utils/services/api/api";
+import { apiConstants } from "../../utils/services/api/apiEndpoints";
+import { notify } from "../../utils/services/notify/notify";
 
 export const CreateSkillModal = ({ closeSkillModal = () => { }, showCreateSkill = false }) => {
     const [userFormInput, setUserFormInput] = useState({
@@ -13,6 +17,20 @@ export const CreateSkillModal = ({ closeSkillModal = () => { }, showCreateSkill 
                 setUserFormInput({ ...userFormInput, name: ev.target.value })
         }
     }
+
+    const submitForm = async () => {
+        const postData = userFormInput;
+        const skillDataResponse = await apiCall(apiConstants.skillCreate, { body: postData, loader: true });
+        if (skillDataResponse?.status === 200 && skillDataResponse?.data && Array.isArray(skillDataResponse?.data)) {
+            notify.success(skillDataResponse?.message);
+            closeSkillModal();
+            return;
+        } else if (skillDataResponse?.status === 400) {
+            notify.error(skillDataResponse?.message || constantText.somethingWentWrong);
+            return;
+        }
+        notify.error(constantText.somethingWentWrong);
+    };
 
     return (<>
         <Transition appear show={showCreateSkill} as={Fragment}>
@@ -76,7 +94,7 @@ export const CreateSkillModal = ({ closeSkillModal = () => { }, showCreateSkill 
                                         <button
                                             type="button"
                                             className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-                                            onClick={closeSkillModal}
+                                            onClick={submitForm}
                                         >
                                             Save
                                         </button>

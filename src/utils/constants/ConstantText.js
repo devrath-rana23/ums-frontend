@@ -21,4 +21,5 @@ export const constantText = {
     country: "Country",
     technology: "Technology",
   },
+  somethingWentWrong: "Something went wrong",
 };

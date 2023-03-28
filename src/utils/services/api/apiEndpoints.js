@@ -20,6 +20,14 @@ export const apiEndpoints = {
     url: "/v1/employee",
     method: "post",
   },
+  skillCreate: {
+    url: "/v1/skills",
+    method: "post",
+  },
+  skillList: {
+    url: "/v1/skills",
+    method: "get",
+  },
 };
 
 export const apiConstants = Object.keys(apiEndpoints).reduce((cb, iv) => {

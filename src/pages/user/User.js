@@ -62,8 +62,8 @@ export const User = () => {
 
   const getEmployeeData = async () => {
     const employeeDataResponse = await apiCall(apiConstants.employeeList, { loader: true });
-    if (employeeDataResponse?.data && Array.isArray(employeeDataResponse?.data)) {
-      setEmployeesData(employeeDataResponse?.data);
+    if (employeeDataResponse?.data?.data && Array.isArray(employeeDataResponse?.data?.data)) {
+      setEmployeesData(employeeDataResponse?.data?.data);
     }
   }
 
