@@ -1,7 +1,37 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import { constantText } from "../../utils/constants/ConstantText";
+import ImageUrls from "../../utils/constants/ImageUrls";
+import { apiCall } from "../../utils/services/api/api";
+import { apiConstants } from "../../utils/services/api/apiEndpoints";
+import { notify } from "../../utils/services/notify/notify";
 
 export const CreateRoleModal = ({ closeRoleModal = () => { }, showCreateRole = false }) => {
+    const [userFormInput, setUserFormInput] = useState({
+        name: ""
+    })
+
+    const onchangeField = (ev, fieldName) => {
+        switch (fieldName) {
+            case "name":
+                setUserFormInput({ ...userFormInput, name: ev.target.value })
+        }
+    }
+
+    const submitForm = async () => {
+        const postData = userFormInput;
+        const roleDataResponse = await apiCall(apiConstants.roleCreate, { body: postData, loader: true });
+        if (roleDataResponse?.status === 200 && roleDataResponse?.data && Array.isArray(roleDataResponse?.data)) {
+            notify.success(roleDataResponse?.message);
+            closeRoleModal();
+            return;
+        } else if (roleDataResponse?.status === 400) {
+            notify.error(roleDataResponse?.message || constantText.somethingWentWrong);
+            return;
+        }
+        notify.error(constantText.somethingWentWrong);
+    };
+
     return (<>
         <Transition appear show={showCreateRole} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={closeRoleModal}>
@@ -28,29 +58,48 @@ export const CreateRoleModal = ({ closeRoleModal = () => { }, showCreateRole = f
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                <Dialog.Title
-                                    as="h3"
-                                    className="text-lg font-medium leading-6 text-gray-900"
-                                >
-                                    Role
-                                </Dialog.Title>
-                                <div className="mt-2">
-                                    <p className="text-sm text-gray-500">
-                                        Your payment has been successfully submitted. We’ve sent
-                                        you an email with all of the details of your order.
-                                    </p>
-                                </div>
-
-                                <div className="mt-4">
-                                    <button
-                                        type="button"
-                                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                        onClick={closeRoleModal}
-                                    >
-                                        Save
-                                    </button>
-                                </div>
+                            <Dialog.Panel className="w-full max-w-fit transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+                                <header className="p-8">
+                                    <div className="flex items-center justify-between">
+                                        <Dialog.Title
+                                            as="h3"
+                                            className="text-lg font-medium leading-6 text-gray-900"
+                                        >
+                                            Add New Skill
+                                        </Dialog.Title>
+                                        <figure className="cursor-pointer" onClick={closeRoleModal}>
+                                            <img src={ImageUrls.close} alt="close" />
+                                        </figure>
+                                    </div>
+                                </header>
+                                <body className="py-8 border border-[1px_0px_solid_#E5E7EB]">
+                                    <section className="mx-8">
+                                        <div className="flex flex-col gap-8">
+                                            <div className="flex flex-col" >
+                                                <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Name</label>
+                                                <input type={"text"} name={"email"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                                            </div>
+                                        </div>
+                                    </section>
+                                </body>
+                                <footer className="p-8">
+                                    <div className="flex justify-end items-center gap-3">
+                                        <button
+                                            type="button"
+                                            className="flex flex-row justify-center items-center border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 text-gray-700"
+                                            onClick={closeRoleModal}
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+                                            onClick={submitForm}
+                                        >
+                                            Save
+                                        </button>
+                                    </div>
+                                </footer>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

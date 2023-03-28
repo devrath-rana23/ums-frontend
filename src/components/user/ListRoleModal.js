@@ -1,7 +1,28 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { useAuth } from "../../hooks";
+import { constantText } from "../../utils/constants/ConstantText";
+import ImageUrls from "../../utils/constants/ImageUrls";
+import { apiCall } from "../../utils/services/api/api";
+import { apiConstants } from "../../utils/services/api/apiEndpoints";
 
 export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = false }) => {
+    const { user } = useAuth();
+    const [rolesList, setRolesList] = useState([]);
+    const editHandler = (userId) => { }
+    const deleteHandler = (userId) => { }
+
+    useEffect(() => {
+        getRolesList();
+
+    }, []);
+
+    const getRolesList = async () => {
+        const rolesListDataResponse = await apiCall(apiConstants.roleList, { loader: true });
+        if (rolesListDataResponse?.data?.data.length > 0 && rolesListDataResponse?.data?.data && Array.isArray(rolesListDataResponse?.data?.data)) {
+            setRolesList(rolesListDataResponse?.data?.data);
+        }
+    };
     return (<>
         <Transition appear show={showListRole} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={closeRoleListModal}>
@@ -28,29 +49,66 @@ export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = f
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                <Dialog.Title
-                                    as="h3"
-                                    className="text-lg font-medium leading-6 text-gray-900"
-                                >
-                                    Role List
-                                </Dialog.Title>
-                                <div className="mt-2">
-                                    <p className="text-sm text-gray-500">
-                                        Your payment has been successfully submitted. We’ve sent
-                                        you an email with all of the details of your order.
-                                    </p>
-                                </div>
-
-                                <div className="mt-4">
-                                    <button
-                                        type="button"
-                                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                        onClick={closeRoleListModal}
-                                    >
-                                        Save
-                                    </button>
-                                </div>
+                            <Dialog.Panel className="w-full max-w-fit transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+                                <header className="p-8">
+                                    <div className="flex items-center justify-between">
+                                        <Dialog.Title
+                                            as="h3"
+                                            className="text-lg font-medium leading-6 text-gray-900"
+                                        >
+                                            Skills
+                                        </Dialog.Title>
+                                        <figure className="cursor-pointer" onClick={closeRoleListModal}>
+                                            <img src={ImageUrls.close} alt="close" />
+                                        </figure>
+                                    </div>
+                                </header>
+                                <body className="py-8 border border-[1px_0px_solid_#E5E7EB]">
+                                    <section className="mx-8">
+                                        <table className="box-border border border shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_rgba(0,0,0,0.06)] rounded-lg border-solid">
+                                            <thead className="bg-orange-500 text-center">
+                                                <th className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Name</th>
+                                                {user?.user?.role_id === constantText.superadmin && (
+                                                    <th colSpan={2} className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Action</th>
+                                                )}
+                                            </thead>
+                                            <tbody>
+                                                {rolesList.length > 0 && rolesList.map((item, index) => (
+                                                    <tr>
+                                                        <td className="px-6 py-3 not-italic font-medium text-sm leading-5 tracking-wider">{item?.name}</td>
+                                                        {user?.user?.role_id === constantText.superadmin && (
+                                                            <>
+                                                                <td><button
+                                                                    type="button"
+                                                                    className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+                                                                    onClick={() => editHandler(123)}
+                                                                    disabled={item?.id === constantText.superadmin || item?.id === constantText.admin ? true : false}
+                                                                >
+                                                                    Edit
+                                                                </button></td>
+                                                                <td>
+                                                                    <button
+                                                                        type="button"
+                                                                        className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+                                                                        onClick={() => deleteHandler(123)}
+                                                                        disabled={item?.id === constantText.superadmin || item?.id === constantText.admin ? true : false}
+                                                                    >
+                                                                        Delete
+                                                                    </button>
+                                                                </td>
+                                                            </>
+                                                        )}
+                                                    </tr>
+                                                ))}
+                                                {!rolesList.length > 0 && (
+                                                    <tr>
+                                                        <td colSpan={2} className="px-6 py-3 not-italic font-medium text-sm leading-5 tracking-wider">No data found</td>
+                                                    </tr>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </section>
+                                </body>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

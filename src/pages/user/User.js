@@ -7,10 +7,14 @@ import { Dialog, Transition } from "@headlessui/react";
 import { CreateSkillModal } from "../../components/user/CreateSkillModal";
 import { ListSkillModal } from "../../components/user/ListSkillModal";
 import ImageUrls from "../../utils/constants/ImageUrls";
+import { ListRoleModal } from "../../components/user/ListRoleModal";
+import { CreateRoleModal } from "../../components/user/CreateRoleModal";
+import { useAuth } from "../../hooks";
+import { constantText } from "../../utils/constants/ConstantText";
 
 
 export const User = () => {
-
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [employeesData, setEmployeesData] = useState([]);
   const [showCreateSkill, setShowCreateSkill] = useState(false);
@@ -36,6 +40,22 @@ export const User = () => {
 
   const openSkillModal = () => {
     setShowCreateSkill(true);
+  }
+
+  const closeRoleModal = () => {
+    setShowCreateRole(false);
+  }
+
+  const openRoleModal = () => {
+    setShowCreateRole(true);
+  }
+
+  const openRoleListModal = () => {
+    setShowListRole(true);
+  }
+
+  const closeRoleListModal = () => {
+    setShowListRole(false);
   }
 
   const openSkillListModal = () => {
@@ -94,6 +114,22 @@ export const User = () => {
             onClick={openSkillListModal}
           >
             Show skills
+          </button>
+          {user?.user?.role_id === constantText.superadmin && (
+            <button
+              type="button"
+              className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+              onClick={openRoleModal}
+            >
+              Create Role
+            </button>
+          )}
+          <button
+            type="button"
+            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+            onClick={openRoleListModal}
+          >
+            Show Roles
           </button>
         </div>
         <table className="user-table table-fixed mx-auto my-0 p-0 border-collapse">
@@ -282,6 +318,8 @@ export const User = () => {
       </Transition>
       {showCreateSkill && <CreateSkillModal showCreateSkill={showCreateSkill} closeSkillModal={closeSkillModal} />}
       {showListSkill && <ListSkillModal showListSkill={showListSkill} closeSkillListModal={closeSkillListModal} />}
+      {showCreateRole && <CreateRoleModal showCreateRole={showCreateRole} closeRoleModal={closeRoleModal} />}
+      {showListRole && <ListRoleModal showListRole={showListRole} closeRoleListModal={closeRoleListModal} />}
     </>
   );
 };

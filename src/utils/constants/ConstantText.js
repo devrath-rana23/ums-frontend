@@ -22,4 +22,6 @@ export const constantText = {
     technology: "Technology",
   },
   somethingWentWrong: "Something went wrong",
+  superadmin: 1,
+  admin: 2,
 };

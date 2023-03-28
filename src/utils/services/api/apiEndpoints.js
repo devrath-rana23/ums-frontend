@@ -28,6 +28,14 @@ export const apiEndpoints = {
     url: "/v1/skills",
     method: "get",
   },
+  roleCreate: {
+    url: "/v1/roles",
+    method: "post",
+  },
+  roleList: {
+    url: "/v1/roles",
+    method: "get",
+  },
 };
 
 export const apiConstants = Object.keys(apiEndpoints).reduce((cb, iv) => {
