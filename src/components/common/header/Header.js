@@ -1,16 +1,26 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks";
 import ImageUrls from "../../../utils/constants/ImageUrls";
 import { Logout } from "../../../utils/Utils";
 
 export const Header = () => {
   const { user, setUser } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
   const [headerLinks, setHeaderLinks] = useState([
-    { name: "Dashboard", link: "/dashboard", active: true },
+    { name: "Dashboard", link: "/dashboard", active: false },
     { name: "User Management", link: "/user", active: false },
   ]);
+
+  useEffect(() => {
+    const headerLinksCopy = headerLinks.map((item, index) => {
+      return item.link === location.pathname
+        ? { ...item, active: true }
+        : { ...item, active: false };
+    });
+    setHeaderLinks(headerLinksCopy);
+  }, []);
 
   const handleClick = (indexR, item) => {
     const headerLinksCopy = headerLinks.map((item, index) => {
