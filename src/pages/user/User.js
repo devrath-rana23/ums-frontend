@@ -11,6 +11,7 @@ import { ListRoleModal } from "../../components/user/ListRoleModal";
 import { CreateRoleModal } from "../../components/user/CreateRoleModal";
 import { useAuth } from "../../hooks";
 import { constantText } from "../../utils/constants/ConstantText";
+import { TextField } from "../../components/common/textField/TextField";
 
 
 export const User = () => {
@@ -23,7 +24,16 @@ export const User = () => {
   const [showListSkill, setShowListSkill] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [userFormInput, setUserFormInput] = useState({
-    name: ""
+    name: "",
+    role_id: "",
+    avatar: "",
+    birth: "",
+    salary: "",
+    martial_status: "",
+    bonus: "",
+    phone: "",
+    email: "",
+    skills: "",
   })
 
   const openModal = () => {
@@ -243,33 +253,72 @@ export const User = () => {
                         <div className="flex flex-col gap-8">
                           <div className="flex gap-2">
                             <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Name</label>
-                              <input type={"text"} name={"employee_name"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                              <TextField
+                                label={"Name"}
+                                type={"text"}
+                                value={userFormInput.name}
+                                onChange={(ev) => onchangeField(ev, "name")}
+                                required={true}
+                              />
                             </div>
                             <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Role</label>
-                              <input type={"text"} name={"role_id"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                              <TextField
+                                label={"Date of birth"}
+                                type={"text"}
+                                value={userFormInput.birth}
+                                onChange={(ev) => onchangeField(ev, "birth")}
+                                required={true}
+                              />
                             </div>
                           </div>
                           <div className="flex gap-2">
                             <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Salary</label>
-                              <input type={"text"} name={"salary"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                              <TextField
+                                label={"Salary"}
+                                type={"text"}
+                                value={userFormInput.salary}
+                                onChange={(ev) => onchangeField(ev, "salary")}
+                                required={true}
+                              />
                             </div>
                             <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Bonus</label>
-                              <input type={"text"} name={"phone"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                              <TextField
+                                label={"Bonus"}
+                                type={"text"}
+                                value={userFormInput.bonus}
+                                onChange={(ev) => onchangeField(ev, "bonus")}
+                                required={true}
+                              />
                             </div>
                           </div>
                           <div className="flex gap-2">
                             <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Date of Birth</label>
-                              <input type={"text"} name={"salary"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                              <TextField
+                                label={"Skills"}
+                                type={"text"}
+                                value={userFormInput.skills}
+                                onChange={(ev) => onchangeField(ev, "skills")}
+                                required={true}
+                              />
                             </div>
                             <div className="flex flex-col" >
-                              <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Marital Status</label>
-                              <input type={"text"} name={"phone"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                              <TextField
+                                label={"Marital Status"}
+                                type={"text"}
+                                value={userFormInput.martial_status}
+                                onChange={(ev) => onchangeField(ev, "martial_status")}
+                                required={true}
+                              />
                             </div>
+                          </div>
+                          <div className="flex flex-col" >
+                            <TextField
+                              label={"Role"}
+                              type={"text"}
+                              value={userFormInput.role_id}
+                              onChange={(ev) => onchangeField(ev, "role_id")}
+                              required={true}
+                            />
                           </div>
                         </div>
                       </div>
@@ -278,16 +327,22 @@ export const User = () => {
                     <section className="mx-8">
                       <div className="flex flex-col gap-8">
                         <div className="flex flex-col" >
-                          <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Email</label>
-                          <input type={"text"} name={"email"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                          <TextField
+                            label={"Email"}
+                            type={"text"}
+                            value={userFormInput.email}
+                            onChange={(ev) => onchangeField(ev, "email")}
+                            required={true}
+                          />
                         </div>
                         <div className="flex flex-col" >
-                          <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Phone</label>
-                          <input type={"text"} name={"email"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
-                        </div>
-                        <div className="flex flex-col" >
-                          <label className="not-italic font-medium text-sm leading-5 text-gray-700" >Skills</label>
-                          <input type={"text"} name={"email"} className="box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[9px] rounded-md border-solid outline-none w-full" value={userFormInput.name} onChange={(ev) => onchangeField(ev, "name")} />
+                          <TextField
+                            label={"Phone"}
+                            type={"text"}
+                            value={userFormInput.phone}
+                            onChange={(ev) => onchangeField(ev, "phone")}
+                            required={true}
+                          />
                         </div>
                       </div>
                     </section>
