@@ -5,6 +5,8 @@ export const TextField = ({
     value = "",
     options = [],
     addClass = "",
+    valueKey = "",
+    textKey = "",
 }) => {
     return (
         <>
@@ -21,9 +23,9 @@ export const TextField = ({
                 {options?.map((optionValue, optionIndex) => (
                     <option
                         key={optionIndex}
-                        value={optionValue}
+                        value={valueKey ? optionValue[valueKey] : ""}
                     >
-                        {optionValue}
+                        {textKey ? optionValue[textKey] : ""}
                     </option>
                 ))}
             </select>
