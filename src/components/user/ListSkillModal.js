@@ -66,12 +66,14 @@ export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill 
                                     <section className="mx-8">
                                         <table className="box-border border border shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_rgba(0,0,0,0.06)] rounded-lg border-solid">
                                             <thead className="bg-orange-500 text-center">
-                                                <th className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Name</th>
-                                                <th colSpan={2} className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Action</th>
+                                                <tr>
+                                                    <th className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Name</th>
+                                                    <th colSpan={2} className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Action</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 {skillsList.length > 0 && skillsList.map((item, index) => (
-                                                    <tr>
+                                                    <tr key={index}>
                                                         <td className="px-6 py-3 not-italic font-medium text-sm leading-5 tracking-wider">{item?.name}</td>
                                                         <td><button
                                                             type="button"

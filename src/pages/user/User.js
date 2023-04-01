@@ -80,7 +80,7 @@ export const User = () => {
         <h1 className="text-[55px] font-bold text-[#00000090] p-[15px]">User Management</h1>
       </div>
       <div className="flex flex-col items-center justify-center">
-        <div className="flex flex-end gap-[1rem] my-[15px]">
+        <div className="btns-container flex flex-end gap-[1rem] my-[15px]">
           <button
             type="button"
             className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
@@ -119,7 +119,9 @@ export const User = () => {
             Show Roles
           </button>
         </div>
-        <table className="user-table table-fixed mx-auto my-0 p-0 border-collapse">
+      </div>
+      <div className="overflow-auto flex justify-center">
+        <table className="table-fixed user-table table-fixed border-collapse">
           <thead className="user-thead">
             <tr className="bg-orange-500 text-white border p-2.5 border-solid border-[#ddd]">
               <th className="text-xl tracking-widest capitalize text-center p-5" >Name</th>

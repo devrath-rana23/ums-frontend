@@ -67,14 +67,16 @@ export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = f
                                     <section className="mx-8">
                                         <table className="box-border border border shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_rgba(0,0,0,0.06)] rounded-lg border-solid">
                                             <thead className="bg-orange-500 text-center">
-                                                <th className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Name</th>
-                                                {user?.user?.role_id === constantText.superadmin && (
-                                                    <th colSpan={2} className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Action</th>
-                                                )}
+                                                <tr>
+                                                    <th className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Name</th>
+                                                    {user?.user?.role_id === constantText.superadmin && (
+                                                        <th colSpan={2} className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Action</th>
+                                                    )}
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 {rolesList.length > 0 && rolesList.map((item, index) => (
-                                                    <tr>
+                                                    <tr key={index}>
                                                         <td className="px-6 py-3 not-italic font-medium text-sm leading-5 tracking-wider">{item?.name}</td>
                                                         {user?.user?.role_id === constantText.superadmin && (
                                                             <>

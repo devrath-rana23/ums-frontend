@@ -1,4 +1,8 @@
 @media screen and (max-width: 600px) {
+    .btns-container {
+        flex-direction: column;
+    }
+
     .user-table {
         border: 0;
     }
