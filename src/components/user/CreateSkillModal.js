@@ -72,7 +72,7 @@ export const CreateSkillModal = ({ closeSkillModal = () => { }, showCreateSkill 
                                         </figure>
                                     </div>
                                 </header>
-                                <body className="py-8 border border-[1px_0px_solid_#E5E7EB]">
+                                <div className="py-8 border border-[1px_0px_solid_#E5E7EB]">
                                     <section className="mx-8">
                                         <div className="flex flex-col gap-8">
                                             <div className="flex flex-col" >
@@ -81,7 +81,7 @@ export const CreateSkillModal = ({ closeSkillModal = () => { }, showCreateSkill 
                                             </div>
                                         </div>
                                     </section>
-                                </body>
+                                </div>
                                 <footer className="p-8">
                                     <div className="flex justify-end items-center gap-3">
                                         <button

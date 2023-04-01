@@ -63,7 +63,7 @@ export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = f
                                         </figure>
                                     </div>
                                 </header>
-                                <body className="py-8 border border-[1px_0px_solid_#E5E7EB]">
+                                <div className="py-8 border border-[1px_0px_solid_#E5E7EB]">
                                     <section className="mx-8">
                                         <table className="box-border border border shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_rgba(0,0,0,0.06)] rounded-lg border-solid">
                                             <thead className="bg-orange-500 text-center">
@@ -108,7 +108,7 @@ export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = f
                                             </tbody>
                                         </table>
                                     </section>
-                                </body>
+                                </div>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>
