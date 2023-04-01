@@ -121,7 +121,7 @@ export const User = () => {
         </div>
       </div>
       <div className="overflow-auto mx-10">
-        <table className="table-fixed user-table table-fixed border-collapse">
+        <table className="user-table table-fixed border-collapse">
           <thead className="user-thead">
             <tr className="bg-orange-500 text-white border p-2.5 border-solid border-[#ddd]">
               <th className="text-xl tracking-widest capitalize text-center p-5" >Name</th>
