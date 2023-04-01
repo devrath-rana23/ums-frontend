@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Select } from "../common/select/Select";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
 import { apiCall } from "../../utils/services/api/api";
+import { SelectWithAutoComplete } from "../common/select/SelectWithAutoComplete";
 
 export const UserFormModal = ({ isOpen, closeModal }) => {
 
@@ -78,6 +79,46 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
                 return setUserFormInput({ ...userFormInput, skills: reqValue });
         }
     }
+
+    // const onChangeQuery = (value) => {
+    //     getEmployeeList(value);
+    // };
+
+    // const onChangeField = (ev, index, column) => {
+    //     const teamDataCopy = [...teamData];
+    //     if (teamDataCopy[index]) {
+    //         teamDataCopy[index][column] = ev.target.value;
+    //         setTeamData(teamDataCopy);
+    //     }
+    // };
+
+    // const employeOptionView = (
+    //     keyText,
+    //     option,
+    //     selected,
+    //     active
+    // ) => {
+    //     return (
+    //         <span className="border-b-gray-300">
+    //             <div className="truncate">
+    //                 <p className={`truncate ${selected ? "font-medium" : "font-normal"}`}>
+    //                     {keyText && option && option[keyText] ? option[keyText] : option}
+    //                 </p>
+    //                 <p className={`truncate ${selected ? "font-medium" : "font-normal"}`}>
+    //                     {option.email || option.official_emailid}
+    //                 </p>
+    //             </div>
+    //             {selected && (
+    //                 <span
+    //                     className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? "text-blueColor bg-blue-100" : ""
+    //                         }`}
+    //                 >
+    //                     <CheckIcon className="h-5 w-5" aria-hidden="true" />
+    //                 </span>
+    //             )}
+    //         </span>
+    //     );
+    // };
 
     return (
         <>
@@ -183,14 +224,29 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
                                                         </div>
                                                         <div className="flex gap-2">
                                                             <div className="flex flex-1 flex-col" >
-                                                                <TextField
-                                                                    nameField={"skills"}
+                                                                {/* <SelectWithAutoComplete
                                                                     label={"Skills"}
-                                                                    type={"text"}
-                                                                    value={userFormInput.skills}
+                                                                    options={skillsList}
                                                                     onChange={(ev) => onchangeField(ev, "skills")}
+                                                                    keyText={"id"}
+                                                                    placeholder={"name"}
+                                                                    multiple={true}
                                                                     required={true}
-                                                                />
+                                                                    optionView
+                                                                    minChar={2}
+
+                                                                    value={teamData[index].emp_name}
+                                                                    options={employeeList}
+                                                                    optionView={employeOptionView}
+                                                                    optionClass="border-b border-b-gray-300"
+                                                                    keyText="emp_name"
+                                                                    onChange={(ev) =>
+                                                                        onChangeField(ev, index, "emp_name")
+                                                                    }
+                                                                    placeholder={"Search people"}
+                                                                    onChangeQuery={onChangeQuery}
+                                                                    required={true}
+                                                                /> */}
                                                             </div>
                                                             <div className="flex flex-1 flex-col" >
                                                                 <Select
