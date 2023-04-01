@@ -120,7 +120,7 @@ export const User = () => {
           </button>
         </div>
       </div>
-      <div className="overflow-auto flex justify-center">
+      <div className="overflow-auto mx-10">
         <table className="table-fixed user-table table-fixed border-collapse">
           <thead className="user-thead">
             <tr className="bg-orange-500 text-white border p-2.5 border-solid border-[#ddd]">
