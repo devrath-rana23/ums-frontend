@@ -1,4 +1,4 @@
-export const TextField = ({
+export const Select = ({
     label = "",
     onChange = () => { },
     nameField = "",
@@ -15,7 +15,7 @@ export const TextField = ({
             )}
             <select
                 defaultValue={value}
-                className={`${addClass}`}
+                className={`bg-white box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[11px] rounded-md border-solid outline-none w-full ${addClass}`}
                 name={nameField}
                 onChange={onChange}
             >

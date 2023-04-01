@@ -1,9 +1,26 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import ImageUrls from "../../utils/constants/ImageUrls";
 import { TextField } from "../common/textField/TextField";
 import { Dialog, Transition } from "@headlessui/react";
+import { Select } from "../common/select/Select";
+import { apiConstants } from "../../utils/services/api/apiEndpoints";
+import { apiCall } from "../../utils/services/api/api";
 
 export const UserFormModal = ({ isOpen, closeModal }) => {
+
+    useEffect(() => {
+        getSkills();
+        getRoles();
+    }, []);
+
+    const maritalStatusArray = [
+        { name: "single" },
+        { name: "married" },
+        { name: "divorced" }
+    ];
+
+    const [rolesList, setRolesList] = useState([]);
+    const [skillsList, setSkillsList] = useState([]);
 
     const [userFormInput, setUserFormInput] = useState({
         name: "",
@@ -19,8 +36,22 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
     })
 
     const handleFormSubmit = (ev) => {
-        console.log(ev);
+        closeModal();
     }
+
+    const getSkills = async () => {
+        const skillsListResponse = await apiCall(apiConstants.skillList, { loader: true });
+        if (skillsListResponse?.data?.data && Array.isArray(skillsListResponse?.data?.data)) {
+            setSkillsList(skillsListResponse?.data?.data);
+        }
+    };
+
+    const getRoles = async () => {
+        const rolesListResponse = await apiCall(apiConstants.roleList, { loader: true });
+        if (rolesListResponse?.data?.data && Array.isArray(rolesListResponse?.data?.data)) {
+            setRolesList(rolesListResponse?.data?.data);
+        }
+    };
 
     const onchangeField = (ev, fieldName) => {
         const reqValue = ev.target.value;
@@ -151,7 +182,7 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
                                                             </div>
                                                         </div>
                                                         <div className="flex gap-2">
-                                                            <div className="flex flex-col" >
+                                                            <div className="flex flex-1 flex-col" >
                                                                 <TextField
                                                                     nameField={"skills"}
                                                                     label={"Skills"}
@@ -161,25 +192,25 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
                                                                     required={true}
                                                                 />
                                                             </div>
-                                                            <div className="flex flex-col" >
-                                                                <TextField
+                                                            <div className="flex flex-1 flex-col" >
+                                                                <Select
+                                                                    valueKey={"name"}
+                                                                    textKey={"name"}
                                                                     nameField={"martial_status"}
                                                                     label={"Marital Status"}
-                                                                    type={"text"}
-                                                                    value={userFormInput.martial_status}
+                                                                    options={maritalStatusArray}
                                                                     onChange={(ev) => onchangeField(ev, "martial_status")}
-                                                                    required={true}
                                                                 />
                                                             </div>
                                                         </div>
                                                         <div className="flex flex-col" >
-                                                            <TextField
+                                                            <Select
+                                                                valueKey={"id"}
+                                                                textKey={"name"}
                                                                 nameField={"role_id"}
                                                                 label={"Role"}
-                                                                type={"text"}
-                                                                value={userFormInput.role_id}
+                                                                options={rolesList}
                                                                 onChange={(ev) => onchangeField(ev, "role_id")}
-                                                                required={true}
                                                             />
                                                         </div>
                                                     </div>
