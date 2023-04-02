@@ -165,7 +165,7 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
                                                     <div className="flex flex-col">
                                                         <label className="not-italic font-medium text-sm leading-5 text-gray-700">Profile Photo</label>
                                                         {imageBlob && (
-                                                            <img src={imageBlob} className="w-[143px] h-[113px] rounded-full" alt="avatarPlaceholder" />
+                                                            <img src={imageBlob} className="w-[143px] h-[143px] rounded-full" alt="avatarPlaceholder" />
                                                         )}
                                                         {!imageBlob && (
                                                             <img className="w-[143px] h-auto" src={ImageUrls.avatarPlaceholder} alt="avatarPlaceholder" />
