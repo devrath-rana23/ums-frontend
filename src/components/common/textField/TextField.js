@@ -7,6 +7,7 @@ export const TextField = ({
   required = false,
   autoComplete = "off",
   nameField = "",
+  id = "",
 }) => {
   return (
     <>
@@ -21,6 +22,7 @@ export const TextField = ({
         onChange={onChange}
         required={required}
         autoComplete={autoComplete}
+        id={id}
       />
     </>
   );

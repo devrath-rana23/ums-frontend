@@ -26,10 +26,10 @@ export const CreateSkillModal = ({ closeSkillModal = () => { }, showCreateSkill 
             closeSkillModal();
             return;
         } else if (skillDataResponse?.status === 400) {
-            notify.error(skillDataResponse?.message || constantText.somethingWentWrong);
+            notify.error(skillDataResponse?.message || constantText.SOMETHING_WENT_WRONG);
             return;
         }
-        notify.error(constantText.somethingWentWrong);
+        notify.error(constantText.SOMETHING_WENT_WRONG);
     };
 
     return (<>

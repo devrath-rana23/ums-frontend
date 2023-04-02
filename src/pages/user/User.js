@@ -73,7 +73,6 @@ export const User = () => {
     }
   }
 
-
   return (
     <>
       <div className="flex justify-center">

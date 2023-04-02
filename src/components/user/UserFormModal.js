@@ -6,7 +6,9 @@ import { Select } from "../common/select/Select";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
 import { apiCall } from "../../utils/services/api/api";
 import { SelectWithAutoComplete } from "../common/select/SelectWithAutoComplete";
-import { CheckIcon } from "@heroicons/react/20/solid";
+import { DatePicker } from "../common/datePicker/DatePicker";
+import { constantText } from "../../utils/constants/ConstantText";
+import { notify } from "../../utils/services/notify/notify";
 
 export const UserFormModal = ({ isOpen, closeModal }) => {
 
@@ -21,6 +23,7 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
         { name: "divorced" }
     ];
 
+    const [imageBlob, setImageBlob] = useState("");
     const [rolesList, setRolesList] = useState([]);
     const [skillsList, setSkillsList] = useState([]);
     const [selected, setSelected] = useState([]);
@@ -37,8 +40,24 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
         skills: "",
     });
 
-    const handleFormSubmit = (ev) => {
-        closeModal();
+    const handleFormSubmit = async (ev) => {
+        ev.preventDefault();
+        const postData = userFormInput;
+        const createUserResponseData = await apiCall(apiConstants.employeeCreate, {
+            loader: true,
+            body: postData,
+            headers: { "Content-Type": "multipart/form-data" }
+        })
+        if (createUserResponseData?.status === 200) {
+            notify.success(createUserResponseData?.message)
+            closeModal();
+            return;
+
+        } else if (createUserResponseData?.status === 400) {
+            notify.error(createUserResponseData?.message || constantText.SOMETHING_WENT_WRONG)
+            return;
+        }
+        notify.error(constantText.SOMETHING_WENT_WRONG);
     };
 
     const getSkills = async () => {
@@ -79,6 +98,24 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
         }
     };
 
+    const getPhoto = (ev) => {
+        let file = ev.target.files[0];
+        let filePath = ev.target.value;
+        let allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+            ev.target.value = '';
+            setImageBlob("");
+            return false;
+        } else {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                setImageBlob(reader.result);
+            };
+            const formInputCopy = { ...userFormInput, avatar: file };
+            setUserFormInput(formInputCopy);
+        }
+    };
     return (
         <>
             <Transition appear show={isOpen} as={Fragment}>
@@ -127,14 +164,19 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
                                                 <div className="flex gap-10">
                                                     <div className="flex flex-col">
                                                         <label className="not-italic font-medium text-sm leading-5 text-gray-700">Profile Photo</label>
-                                                        <img className="w-[143px] h-auto" src={ImageUrls.avatarPlaceholder} alt="avatarPlaceholder" />
-                                                        <button
-                                                            type="button"
-                                                            className="mt-[15.99px] flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-                                                            onClick={closeModal}
+                                                        {imageBlob && (
+                                                            <img src={imageBlob} className="w-[143px] h-[113px] rounded-full" alt="avatarPlaceholder" />
+                                                        )}
+                                                        {!imageBlob && (
+                                                            <img className="w-[143px] h-auto" src={ImageUrls.avatarPlaceholder} alt="avatarPlaceholder" />
+                                                        )}
+                                                        <label
+                                                            htmlFor="input-file"
+                                                            className="cursor-pointer mt-[15.99px] flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
                                                         >
                                                             Upload
-                                                        </button>
+                                                        </label>
+                                                        <input onChange={(ev) => getPhoto(ev)} type="file" id='input-file' hidden />
                                                     </div>
                                                     <div className="flex flex-col gap-8">
                                                         <div className="flex gap-2">
@@ -149,10 +191,9 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
                                                                 />
                                                             </div>
                                                             <div className="flex flex-[1] flex-col" >
-                                                                <TextField
+                                                                <DatePicker
                                                                     nameField={"birth"}
                                                                     label={"Date of birth"}
-                                                                    type={"date"}
                                                                     value={userFormInput.birth}
                                                                     onChange={(ev) => onchangeField(ev, "birth")}
                                                                     required={true}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CommonLoader} from "../../../components/common/Loader/Loader";
+import { CommonLoader } from "../../../components/common/Loader/Loader";
 import { config } from "../../config/Config";
 import { appStorageService } from "../storage/Storage";
 import { apiEndpoints } from "./apiEndpoints";
@@ -17,13 +17,13 @@ const axiosInstances = {
 };
 
 export const apiCall = (apiEndpointName, options) => {
-  const { body, params, queryParams, loader = false } = { ...options };
+  const { body, params, queryParams, loader = false, headers = "application/json" } = { ...options };
 
   if (apiEndpoints[apiEndpointName] === undefined) {
     const err = new Error(
       "API " +
-        apiEndpointName +
-        " not found in endpointConfig. Please check api. Endpoints"
+      apiEndpointName +
+      " not found in endpointConfig. Please check api. Endpoints"
     );
     return err;
   }
@@ -40,7 +40,10 @@ export const apiCall = (apiEndpointName, options) => {
   }
   const axiosInstance = axiosInstances[config.instance] || axiosInstances.i1;
   showHideLoader(loader, true);
-  return axiosInstance({ method: config.method, url: config.url, data: body })
+  return axiosInstance({
+    method: config.method, url: config.url, data: body,
+    headers: headers,
+  })
     .then((res) => {
       showHideLoader(loader, false);
       return handleResponse(res);

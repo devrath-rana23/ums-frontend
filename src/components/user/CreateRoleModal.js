@@ -26,10 +26,10 @@ export const CreateRoleModal = ({ closeRoleModal = () => { }, showCreateRole = f
             closeRoleModal();
             return;
         } else if (roleDataResponse?.status === 400) {
-            notify.error(roleDataResponse?.message || constantText.somethingWentWrong);
+            notify.error(roleDataResponse?.message || constantText.SOMETHING_WENT_WRONG);
             return;
         }
-        notify.error(constantText.somethingWentWrong);
+        notify.error(constantText.SOMETHING_WENT_WRONG);
     };
 
     return (<>
