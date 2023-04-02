@@ -23,7 +23,7 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
 
     const [rolesList, setRolesList] = useState([]);
     const [skillsList, setSkillsList] = useState([]);
-
+    const [selected, setSelected] = useState([]);
     const [userFormInput, setUserFormInput] = useState({
         name: "",
         role_id: "",
@@ -35,11 +35,11 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
         phone: "",
         email: "",
         skills: "",
-    })
+    });
 
     const handleFormSubmit = (ev) => {
         closeModal();
-    }
+    };
 
     const getSkills = async () => {
         const skillsListResponse = await apiCall(apiConstants.skillList, { loader: true });
@@ -76,46 +76,7 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
                 return setUserFormInput({ ...userFormInput, phone: reqValue });
             case "email":
                 return setUserFormInput({ ...userFormInput, email: reqValue });
-            case "skills":
-                return setUserFormInput({ ...userFormInput, skills: reqValue });
         }
-    }
-
-    const onChangeQuery = (value) => {
-        getSkills();
-    };
-
-    const onChangeField = (ev) => {
-        const reqValue = ev.target.value;
-        return setUserFormInput({ ...userFormInput, skills: reqValue });
-    };
-
-    const employeOptionView = (
-        keyText,
-        option,
-        selected,
-        active
-    ) => {
-        return (
-            <span className="border-b-gray-300">
-                <div className="truncate">
-                    <p className={`truncate ${selected ? "font-medium" : "font-normal"}`}>
-                        {keyText && option && option[keyText] ? option[keyText] : option}
-                    </p>
-                    <p className={`truncate ${selected ? "font-medium" : "font-normal"}`}>
-                        {option.name}
-                    </p>
-                </div>
-                {selected && (
-                    <span
-                        className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? "text-blueColor bg-blue-100" : ""
-                            }`}
-                    >
-                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                )}
-            </span>
-        );
     };
 
     return (
@@ -225,15 +186,11 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
                                                                 <SelectWithAutoComplete
                                                                     label={"Skills"}
                                                                     options={skillsList}
-                                                                    onChange={(ev) => onchangeField(ev, "skills")}
-                                                                    keyText={"name"}
-                                                                    placeholder={"name"}
-                                                                    multiple={true}
-                                                                    required={true}
-                                                                    optionView={employeOptionView}
-                                                                    minChar={2}
-                                                                    onChangeQuery={onChangeQuery}
-                                                                    value={skillsList.name}
+                                                                    selected={selected}
+                                                                    setSelected={setSelected}
+                                                                    multipleVal={true}
+                                                                    setUserFormInput={setUserFormInput}
+                                                                    userFormInput={userFormInput}
                                                                 />
                                                             </div>
                                                             <div className="flex flex-1 flex-col" >

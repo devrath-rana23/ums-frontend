@@ -1,130 +1,100 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { useDebounce } from '../../../hooks'
 
 export const SelectWithAutoComplete = ({
-  label,
-  value = '',
+  label = "",
   options = [],
-  onChange = () => { },
-  onChangeQuery = false,
-  addClass = '',
-  keyText = '',
-  placeholder = '',
-  multiple = false,
-  required = false,
-  optionClass = '',
-  optionView,
-  useDebounceTime = 1000,
-  minChar = 0
+  selected = {},
+  multipleVal = false,
+  setSelected = () => { },
+  setUserFormInput,
+  userFormInput,
 }) => {
-  const [selected, setSelected] = useState('')
   const [query, setQuery] = useState('')
 
-  useEffect(() => { if (onChangeQuery) { onChangeQuery(query) } }, [useDebounce(query, useDebounceTime)]);
-
-  const filteredOptions =
+  const filteredPeople =
     query === ''
-      ? options :
-      (onChangeQuery ? options :
-        options.filter((option) =>
-          (keyText && option && option[keyText] ? option[keyText] : option || '')
-            .toLowerCase()
-            .replace(/\s+/g, '')
-            .includes(query.toLowerCase().replace(/\s+/g, ''))
-        ))
+      ? options
+      : options.filter((skill) =>
+        skill.name
+          .toLowerCase()
+          .replace(/\s+/g, '')
+          .includes(query.toLowerCase().replace(/\s+/g, ''))
+      )
 
-  const onChangeOption = (value) => {
-    setSelected(value)
-    onChange({ target: { value } })
-  }
-
-  const onChangeOptionQuery = (value) => {
-    setQuery(value)
-  }
+  const handleCHange = (ev) => {
+    setSelected(ev);
+    return setUserFormInput({ ...userFormInput, skills: ev.map((item) => { return item.id }) });
+  };
 
   return (
-    <>
-      {label && <label className="text-sm block leading-5 font-medium">{label}</label>}
-      <Combobox
-        multiple={multiple}
-        value={multiple ? [...value] : value}
-        onChange={onChangeOption}
-      >
-        <div className="relative w-full">
-          <div className="relative w-full">
+    <div>
+      <Combobox value={selected} onChange={handleCHange} multiple={multipleVal}>
+        <div className="relative">
+          <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+            <Combobox.Label className={`not-italic font-medium text-sm leading-5 text-gray-700`}>Skills</Combobox.Label>
             <Combobox.Input
-              className={`${value?.length ? 'pr-10' : 'pr-8'} border w-full outline-none text-left text-base leading-6 text-gray-500 font-normal placeholder:mr-3 border-gray-300 p-2 rounded-md ${addClass}`}
-              displayValue={(option) => keyText && option && option[keyText] ? option[keyText] : option}
-              onChange={(event) => onChangeOptionQuery(event.target.value)}
-              placeholder={placeholder}
-              required={required}
+              className="bg-white box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[11px] rounded-md border-solid outline-none w-full "
+              displayValue={multipleVal ? (skills) =>
+                skills.map((skill) => skill.name).join(', ') : (skill) => skill.name
+              }
+              onChange={(event) => setQuery(event.target.value)}
             />
-            {value &&
-              <button className="absolute inset-y-0 right-5 flex items-center cursor-pointer" onClick={() => onChangeOption(keyText ? null : '')}>
-                <XMarkIcon
-                  className="h-5 w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-              </button>
-            }
-            <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-1">
+            <Combobox.Button className="absolute top-8 right-0 flex items-center pr-2">
               <ChevronUpDownIcon
                 className="h-5 w-5 text-gray-400"
                 aria-hidden="true"
               />
             </Combobox.Button>
           </div>
-          {query?.length >= minChar ?
-            <Transition
-              as={Fragment}
-              leave="transition ease-in duration-100"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-              afterLeave={() => onChangeOptionQuery('')}
-            >
-              <Combobox.Options className="z-10 absolute mt-1 max-h-60 w-full max-w-[-webkit-fill-available] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {filteredOptions.length === 0 && query?.length >= minChar ? (
-                  <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-                    Nothing found.
-                  </div>
-                ) : (
-                  filteredOptions.map((option, index) => (
-                    <Combobox.Option
-                      key={index}
-                      className={({ active }) =>
-                        `relative cursor-default select-none py-2 pl-10 pr-4` +
-                        `${active ? ' text-blueColor bg-blue-100' : ' text-gray-900'}` +
-                        `${optionClass ? ` ${optionClass}` : ' '}`
-                      }
-                      value={option}
-                    >
-                      {({ selected, active }) => (
-                        (
-                          optionView ?
-                            optionView(keyText, option, selected, active)
-                            :
-                            <>
-                              <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>
-                                {keyText && option && option[keyText] ? option[keyText] : option}
-                              </span>
-                              {selected &&
-                                <span className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-blueColor bg-blue-100' : ''}`}>
-                                  <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                </span>
-                              }
-                            </>
-                        )
-                      )}
-                    </Combobox.Option>
-                  ))
-                )}
-              </Combobox.Options>
-            </Transition> : <></>}
+          <Transition
+            as={Fragment}
+            leave="transition ease-in duration-100"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+            afterLeave={() => setQuery('')}
+          >
+            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              {filteredPeople.length === 0 && query !== '' ? (
+                <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+                  Nothing found.
+                </div>
+              ) : (
+                filteredPeople.map((skill) => (
+                  <Combobox.Option
+                    key={skill.id}
+                    className={({ active }) =>
+                      `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-teal-600 text-white' : 'text-gray-900'
+                      }`
+                    }
+                    value={skill}
+                  >
+                    {({ selected, active }) => (
+                      <>
+                        <span
+                          className={`block truncate ${selected ? 'font-medium' : 'font-normal'
+                            }`}
+                        >
+                          {skill.name}
+                        </span>
+                        {selected ? (
+                          <span
+                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-white' : 'text-teal-600'
+                              }`}
+                          >
+                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                          </span>
+                        ) : null}
+                      </>
+                    )}
+                  </Combobox.Option>
+                ))
+              )}
+            </Combobox.Options>
+          </Transition>
         </div>
       </Combobox>
-    </>
+    </div>
   )
 }
