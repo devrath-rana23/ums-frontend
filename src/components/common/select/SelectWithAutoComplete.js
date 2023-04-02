@@ -44,16 +44,16 @@ export const SelectWithAutoComplete = ({
   const onChangeOptionQuery = (value) => {
     setQuery(value)
   }
-  
+
   return (
     <>
-      {label && <label className="text-sm mb-1 block leading-5 font-medium">{label}</label>}
+      {label && <label className="text-sm block leading-5 font-medium">{label}</label>}
       <Combobox
         multiple={multiple}
         value={multiple ? [...value] : value}
         onChange={onChangeOption}
       >
-        <div className="relative mt-1 w-full">
+        <div className="relative w-full">
           <div className="relative w-full">
             <Combobox.Input
               className={`${value?.length ? 'pr-10' : 'pr-8'} border w-full outline-none text-left text-base leading-6 text-gray-500 font-normal placeholder:mr-3 border-gray-300 p-2 rounded-md ${addClass}`}
