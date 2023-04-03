@@ -164,8 +164,9 @@ export const User = () => {
                     <>
                       <td className="text-center p-5" data-label="Action">
                         <button
+                          disabled={item.role.id === constantText.admin || item.role.id === constantText.superadmin}
                           type="button"
-                          className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+                          className={`flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  ${item.role.id === constantText.admin || item.role.id === constantText.superadmin ? "bg-orange-100" : "bg-orange-500"} text-white`}
                           onClick={() => editHandler(item.id)}
                         >
                           Edit
@@ -174,8 +175,9 @@ export const User = () => {
                       <td className="text-center p-5" data-label="Action">
                         <button
                           type="button"
-                          className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+                          className={`flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  ${item.role.id === constantText.admin || item.role.id === constantText.superadmin ? "bg-orange-100" : "bg-orange-500"} text-white`}
                           onClick={() => deleteHandler(item.id)}
+                          disabled={item.role.id === constantText.admin || item.role.id === constantText.superadmin}
                         >
                           Delete
                         </button>

@@ -32,7 +32,7 @@ export const SelectWithAutoComplete = ({
     <div>
       <Combobox value={selected} onChange={handleCHange} multiple={multipleVal}>
         <div className="relative">
-          <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+          <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
             <Combobox.Label className={`not-italic font-medium text-sm leading-5 text-gray-700`}>Skills</Combobox.Label>
             <Combobox.Input
               className="bg-white box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[11px] rounded-md border-solid outline-none w-full "
@@ -65,7 +65,7 @@ export const SelectWithAutoComplete = ({
                   <Combobox.Option
                     key={skill.id}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-teal-600 text-white' : 'text-gray-900'
+                      `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-orange-600 text-white' : 'text-gray-900'
                       }`
                     }
                     value={skill}
@@ -80,7 +80,7 @@ export const SelectWithAutoComplete = ({
                         </span>
                         {selected ? (
                           <span
-                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-white' : 'text-teal-600'
+                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-white' : 'text-orange-600'
                               }`}
                           >
                             <CheckIcon className="h-5 w-5" aria-hidden="true" />

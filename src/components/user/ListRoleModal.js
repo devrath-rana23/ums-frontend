@@ -82,7 +82,7 @@ export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = f
                                                             <>
                                                                 <td><button
                                                                     type="button"
-                                                                    className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+                                                                    className={`flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  ${item.id === constantText.admin || item.id === constantText.superadmin ? "bg-orange-100" : "bg-orange-500"} text-white`}
                                                                     onClick={() => editHandler(123)}
                                                                     disabled={item?.id === constantText.superadmin || item?.id === constantText.admin ? true : false}
                                                                 >
@@ -91,7 +91,7 @@ export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = f
                                                                 <td>
                                                                     <button
                                                                         type="button"
-                                                                        className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+                                                                        className={`flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  ${item.id === constantText.admin || item.id === constantText.superadmin ? "bg-orange-100" : "bg-orange-500"} text-white`}
                                                                         onClick={() => deleteHandler(123)}
                                                                         disabled={item?.id === constantText.superadmin || item?.id === constantText.admin ? true : false}
                                                                     >

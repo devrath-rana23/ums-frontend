@@ -51,8 +51,10 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
         if (createUserResponseData?.status === 200) {
             notify.success(createUserResponseData?.message)
             closeModal();
+            setTimeout(() => {
+                window.location.reload();
+            }, 500)
             return;
-
         } else if (createUserResponseData?.status === 400) {
             notify.error(createUserResponseData?.message || constantText.SOMETHING_WENT_WRONG)
             return;
