@@ -14,7 +14,7 @@ import { notify } from "../../utils/services/notify/notify";
 export const User = () => {
   const { user } = useAuth();
   const [employeesData, setEmployeesData] = useState([]);
-  const [editEmployeesData, setEditEmployeesData] = useState([]);
+  const [editEmployeesData, setEditEmployeesData] = useState({});
   const [showCreateSkill, setShowCreateSkill] = useState(false);
   const [showCreateRole, setShowCreateRole] = useState(false);
   const [showListRole, setShowListRole] = useState(false);
@@ -27,6 +27,7 @@ export const User = () => {
 
   const closeModal = () => {
     setIsOpen(false);
+    setEditEmployeesData([]);
   }
 
   const closeSkillModal = () => {

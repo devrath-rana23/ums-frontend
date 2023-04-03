@@ -10,8 +10,7 @@ import { DatePicker } from "../common/datePicker/DatePicker";
 import { constantText } from "../../utils/constants/ConstantText";
 import { notify } from "../../utils/services/notify/notify";
 
-export const UserFormModal = ({ editEmployeesData, isOpen, closeModal }) => {
-
+export const UserFormModal = ({ editEmployeesData = {}, isOpen, closeModal }) => {
     useEffect(() => {
         getSkills();
         getRoles();
@@ -42,7 +41,7 @@ export const UserFormModal = ({ editEmployeesData, isOpen, closeModal }) => {
     });
 
     const getSelectedSKill = () => {
-        return editEmployeesData ? setSelected(editEmployeesData?.employee?.skills) : "";
+        return editEmployeesData?.employee?.skills ? setSelected(editEmployeesData?.employee?.skills) : "";
     }
 
     const handleFormSubmit = async (ev) => {
@@ -133,6 +132,7 @@ export const UserFormModal = ({ editEmployeesData, isOpen, closeModal }) => {
             setUserFormInput(formInputCopy);
         }
     };
+
     return (
         <>
             <Transition appear show={isOpen} as={Fragment}>
