@@ -80,27 +80,33 @@ export const User = () => {
       </div>
       <div className="flex flex-col items-center justify-center">
         <div className="btns-container flex flex-end gap-[1rem] my-[15px]">
-          <button
-            type="button"
-            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-            onClick={openModal}
-          >
-            Create user
-          </button>
-          <button
-            type="button"
-            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-            onClick={openSkillModal}
-          >
-            Create skill
-          </button>
-          <button
-            type="button"
-            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-            onClick={openSkillListModal}
-          >
-            Show skills
-          </button>
+          {(user?.user?.role_id === constantText.superadmin || user?.user?.role_id === constantText.admin) && (
+            <button
+              type="button"
+              className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+              onClick={openModal}
+            >
+              Create user
+            </button>
+          )}
+          {(user?.user?.role_id === constantText.superadmin || user?.user?.role_id === constantText.admin) && (
+            <button
+              type="button"
+              className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+              onClick={openSkillModal}
+            >
+              Create skill
+            </button>
+          )}
+          {(user?.user?.role_id === constantText.superadmin || user?.user?.role_id === constantText.admin) && (
+            <button
+              type="button"
+              className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+              onClick={openSkillListModal}
+            >
+              Show skills
+            </button>
+          )}
           {user?.user?.role_id === constantText.superadmin && (
             <button
               type="button"
@@ -110,13 +116,15 @@ export const User = () => {
               Create Role
             </button>
           )}
-          <button
-            type="button"
-            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-            onClick={openRoleListModal}
-          >
-            Show Roles
-          </button>
+          {(user?.user?.role_id === constantText.superadmin || user?.user?.role_id === constantText.admin) && (
+            <button
+              type="button"
+              className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+              onClick={openRoleListModal}
+            >
+              Show Roles
+            </button>
+          )}
         </div>
       </div>
       <div className="overflow-auto mx-10">
@@ -133,7 +141,9 @@ export const User = () => {
               <th className="text-xl tracking-widest capitalize text-center p-5" >Bonus</th>
               <th className="text-xl tracking-widest capitalize text-center p-5" >Phone</th>
               <th className="text-xl tracking-widest capitalize text-center p-5" >Email</th>
-              <th className="text-xl tracking-widest capitalize text-center p-5" colSpan={2}>Action</th>
+              {(user?.user?.role_id === constantText.superadmin || user?.user?.role_id === constantText.admin) && (
+                <th className="text-xl tracking-widest capitalize text-center p-5" colSpan={2}>Action</th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -150,24 +160,28 @@ export const User = () => {
                   <td className="text-center p-5" data-label="Bonus">{item.employee.bonus ?? ""}</td>
                   <td className="text-center p-5" data-label="Phone">{item.employee.contact_info.phone}</td>
                   <td className="text-center p-5" data-label="Email">{item.employee.contact_info.email}</td>
-                  <td className="text-center p-5" data-label="Action">
-                    <button
-                      type="button"
-                      className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-                      onClick={() => editHandler(item.id)}
-                    >
-                      Edit
-                    </button>
-                  </td>
-                  <td className="text-center p-5" data-label="Action">
-                    <button
-                      type="button"
-                      className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-                      onClick={() => deleteHandler(item.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
+                  {(user?.user?.role_id === constantText.superadmin || user?.user?.role_id === constantText.admin) && (
+                    <>
+                      <td className="text-center p-5" data-label="Action">
+                        <button
+                          type="button"
+                          className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+                          onClick={() => editHandler(item.id)}
+                        >
+                          Edit
+                        </button>
+                      </td>
+                      <td className="text-center p-5" data-label="Action">
+                        <button
+                          type="button"
+                          className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+                          onClick={() => deleteHandler(item.id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </>
+                  )}
                 </tr>
               ))
             }
