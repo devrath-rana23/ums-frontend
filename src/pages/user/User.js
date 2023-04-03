@@ -9,6 +9,7 @@ import { CreateRoleModal } from "../../components/user/CreateRoleModal";
 import { useAuth } from "../../hooks";
 import { constantText } from "../../utils/constants/ConstantText";
 import { UserFormModal } from "../../components/user/UserFormModal";
+import { notify } from "../../utils/services/notify/notify";
 
 export const User = () => {
   const { user } = useAuth();
@@ -59,8 +60,25 @@ export const User = () => {
     setShowListSkill(false);
   }
 
-  const editHandler = (userId) => { }
-  const deleteHandler = (userId) => { }
+  const editHandler = async (userId) => { }
+
+  const deleteHandler = async (userId) => {
+    const deleteUserResponseData = await apiCall(apiConstants.employeeDelete, {
+      loader: true,
+      params: {id:userId},
+    })
+    if (deleteUserResponseData?.status === 200) {
+      notify.success(deleteUserResponseData?.message)
+      setTimeout(() => {
+        window.location.reload();
+      }, 500)
+      return;
+    } else if (deleteUserResponseData?.status === 400) {
+      notify.error(deleteUserResponseData?.message || constantText.SOMETHING_WENT_WRONG)
+      return;
+    }
+    notify.error(constantText.SOMETHING_WENT_WRONG);
+  }
 
   useEffect(() => {
     getEmployeeData();

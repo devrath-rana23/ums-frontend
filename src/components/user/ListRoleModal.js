@@ -5,12 +5,27 @@ import { constantText } from "../../utils/constants/ConstantText";
 import ImageUrls from "../../utils/constants/ImageUrls";
 import { apiCall } from "../../utils/services/api/api";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
+import { notify } from "../../utils/services/notify/notify";
 
 export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = false }) => {
     const { user } = useAuth();
     const [rolesList, setRolesList] = useState([]);
     const editHandler = (userId) => { }
-    const deleteHandler = (userId) => { }
+    const deleteHandler = async (roleId) => {
+        const deleteRoleResponseData = await apiCall(apiConstants.roleDelete, {
+            loader: true,
+            params: { id: roleId },
+        })
+        if (deleteRoleResponseData?.status === 200) {
+            notify.success(deleteRoleResponseData?.message)
+            closeRoleListModal();
+            return;
+        } else if (deleteRoleResponseData?.status === 400) {
+            notify.error(deleteRoleResponseData?.message || constantText.SOMETHING_WENT_WRONG)
+            return;
+        }
+        notify.error(constantText.SOMETHING_WENT_WRONG);
+    }
 
     useEffect(() => {
         getRolesList();
@@ -83,7 +98,7 @@ export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = f
                                                                 <td><button
                                                                     type="button"
                                                                     className={`flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  ${item.id === constantText.admin || item.id === constantText.superadmin ? "bg-orange-100" : "bg-orange-500"} text-white`}
-                                                                    onClick={() => editHandler(123)}
+                                                                    onClick={() => editHandler(item.id)}
                                                                     disabled={item?.id === constantText.superadmin || item?.id === constantText.admin ? true : false}
                                                                 >
                                                                     Edit
@@ -92,7 +107,7 @@ export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = f
                                                                     <button
                                                                         type="button"
                                                                         className={`flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  ${item.id === constantText.admin || item.id === constantText.superadmin ? "bg-orange-100" : "bg-orange-500"} text-white`}
-                                                                        onClick={() => deleteHandler(123)}
+                                                                        onClick={() => deleteHandler(item.id)}
                                                                         disabled={item?.id === constantText.superadmin || item?.id === constantText.admin ? true : false}
                                                                     >
                                                                         Delete

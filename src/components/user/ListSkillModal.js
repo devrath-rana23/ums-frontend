@@ -1,14 +1,30 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
+import { constantText } from "../../utils/constants/ConstantText";
 import ImageUrls from "../../utils/constants/ImageUrls";
 import { apiCall } from "../../utils/services/api/api";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
+import { notify } from "../../utils/services/notify/notify";
 
 export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill = false }) => {
 
     const [skillsList, setSkillsList] = useState([]);
     const editHandler = (userId) => { }
-    const deleteHandler = (userId) => { }
+    const deleteHandler = async (skillId) => {
+        const deleteUserResponseData = await apiCall(apiConstants.skillDelete, {
+            loader: true,
+            params: { id: skillId },
+        })
+        if (deleteUserResponseData?.status === 200) {
+            notify.success(deleteUserResponseData?.message)
+            closeSkillListModal();
+            return;
+        } else if (deleteUserResponseData?.status === 400) {
+            notify.error(deleteUserResponseData?.message || constantText.SOMETHING_WENT_WRONG)
+            return;
+        }
+        notify.error(constantText.SOMETHING_WENT_WRONG);
+    }
 
     useEffect(() => {
         getSkillsList();
@@ -78,7 +94,7 @@ export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill 
                                                         <td><button
                                                             type="button"
                                                             className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-                                                            onClick={() => editHandler(123)}
+                                                            onClick={() => editHandler(item.id)}
                                                         >
                                                             Edit
                                                         </button></td>
@@ -86,7 +102,7 @@ export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill 
                                                             <button
                                                                 type="button"
                                                                 className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-                                                                onClick={() => deleteHandler(123)}
+                                                                onClick={() => deleteHandler(item.id)}
                                                             >
                                                                 Delete
                                                             </button>

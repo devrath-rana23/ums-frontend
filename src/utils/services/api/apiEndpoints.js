@@ -36,6 +36,18 @@ export const apiEndpoints = {
     url: "/v1/roles",
     method: "get",
   },
+  employeeDelete: {
+    url: "/v1/employee/:id",
+    method: "delete",
+  },
+  roleDelete: {
+    url: "/v1/roles/:id",
+    method: "delete",
+  },
+  skillDelete: {
+    url: "/v1/skills/:id",
+    method: "delete",
+  },
 };
 
 export const apiConstants = Object.keys(apiEndpoints).reduce((cb, iv) => {

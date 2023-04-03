@@ -103,7 +103,7 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
     const getPhoto = (ev) => {
         let file = ev.target.files[0];
         let filePath = ev.target.value;
-        let allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+        let allowedExtensions = /(\.jpg|\.jpeg|\.png|\.svg)$/i;
         if (!allowedExtensions.exec(filePath)) {
             ev.target.value = '';
             setImageBlob("");
@@ -178,7 +178,7 @@ export const UserFormModal = ({ isOpen, closeModal }) => {
                                                         >
                                                             Upload
                                                         </label>
-                                                        <input onChange={(ev) => getPhoto(ev)} type="file" id='input-file' hidden />
+                                                        <input accept=".jpg,.jpeg,.png,.svg" onChange={(ev) => getPhoto(ev)} type="file" id='input-file' hidden />
                                                     </div>
                                                     <div className="flex flex-col gap-8">
                                                         <div className="flex gap-2">
