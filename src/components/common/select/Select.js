@@ -14,7 +14,7 @@ export const Select = ({
                 <label htmlFor={nameField} className="not-italic font-medium text-sm leading-5 text-gray-700" >{label}</label>
             )}
             <select
-                defaultValue={value}
+                value={value}
                 className={`bg-white box-border border border-gray-300 shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[13px] py-[11px] rounded-md border-solid outline-none w-full ${addClass}`}
                 name={nameField}
                 onChange={onChange}

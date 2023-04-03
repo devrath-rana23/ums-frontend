@@ -15,6 +15,7 @@ export const UserFormModal = ({ editEmployeesData, isOpen, closeModal }) => {
     useEffect(() => {
         getSkills();
         getRoles();
+        getSelectedSKill();
     }, []);
 
     const maritalStatusArray = [
@@ -28,35 +29,49 @@ export const UserFormModal = ({ editEmployeesData, isOpen, closeModal }) => {
     const [skillsList, setSkillsList] = useState([]);
     const [selected, setSelected] = useState([]);
     const [userFormInput, setUserFormInput] = useState({
-        name: "",
-        role_id: "",
-        avatar: "",
-        birth: "",
-        salary: "",
-        martial_status: "",
-        bonus: "",
-        phone: "",
-        email: "",
-        skills: "",
+        name: editEmployeesData?.name ?? "",
+        role_id: editEmployeesData?.role_id ?? "",
+        avatar: editEmployeesData?.avatar ?? "",
+        birth: editEmployeesData?.employee?.birth ?? "",
+        salary: editEmployeesData?.employee?.salary ?? "",
+        martial_status: editEmployeesData?.employee?.martial_status ?? "",
+        bonus: editEmployeesData?.employee?.bonus ?? "",
+        phone: editEmployeesData?.employee?.contact_info?.phone ?? "",
+        email: editEmployeesData?.employee?.contact_info?.email ?? "",
+        skills: editEmployeesData?.employee?.skills.map((item) => { return item.id }) ?? "",
     });
+
+    const getSelectedSKill = () => {
+        return editEmployeesData ? setSelected(editEmployeesData?.employee?.skills) : "";
+    }
 
     const handleFormSubmit = async (ev) => {
         ev.preventDefault();
         const postData = userFormInput;
-        const createUserResponseData = await apiCall(apiConstants.employeeCreate, {
-            loader: true,
-            body: postData,
-            headers: { "Content-Type": "multipart/form-data" }
-        })
-        if (createUserResponseData?.status === 200) {
-            notify.success(createUserResponseData?.message)
+        let userResponseData = "";
+        if (editEmployeesData) {
+            userResponseData = await apiCall(apiConstants.employeeUpdate, {
+                loader: true,
+                params: editEmployeesData?.id,
+                body: postData,
+                headers: { "Content-Type": "multipart/form-data" }
+            })
+        } else {
+            userResponseData = await apiCall(apiConstants.employeeCreate, {
+                loader: true,
+                body: postData,
+                headers: { "Content-Type": "multipart/form-data" }
+            })
+        }
+        if (userResponseData?.status === 200) {
+            notify.success(userResponseData?.message)
             closeModal();
             setTimeout(() => {
                 window.location.reload();
             }, 500)
             return;
-        } else if (createUserResponseData?.status === 400) {
-            notify.error(createUserResponseData?.message || constantText.SOMETHING_WENT_WRONG)
+        } else if (userResponseData?.status === 400) {
+            notify.error(userResponseData?.message || constantText.SOMETHING_WENT_WRONG)
             return;
         }
         notify.error(constantText.SOMETHING_WENT_WRONG);
@@ -238,6 +253,7 @@ export const UserFormModal = ({ editEmployeesData, isOpen, closeModal }) => {
                                                             </div>
                                                             <div className="flex flex-1 flex-col" >
                                                                 <Select
+                                                                    value={userFormInput.martial_status}
                                                                     valueKey={"name"}
                                                                     textKey={"name"}
                                                                     nameField={"martial_status"}
@@ -249,6 +265,7 @@ export const UserFormModal = ({ editEmployeesData, isOpen, closeModal }) => {
                                                         </div>
                                                         <div className="flex flex-col" >
                                                             <Select
+                                                                value={userFormInput.role_id}
                                                                 valueKey={"id"}
                                                                 textKey={"name"}
                                                                 nameField={"role_id"}

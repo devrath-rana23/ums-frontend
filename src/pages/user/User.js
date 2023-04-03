@@ -68,6 +68,7 @@ export const User = () => {
     })
     if (editUserResponseData?.status === 200) {
       setEditEmployeesData(editUserResponseData?.data);
+      openModal();
       return;
     } else if (editUserResponseData?.status === 400) {
       setEditEmployeesData([]);
