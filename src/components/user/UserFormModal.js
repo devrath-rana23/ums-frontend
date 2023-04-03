@@ -10,7 +10,7 @@ import { DatePicker } from "../common/datePicker/DatePicker";
 import { constantText } from "../../utils/constants/ConstantText";
 import { notify } from "../../utils/services/notify/notify";
 
-export const UserFormModal = ({ isOpen, closeModal }) => {
+export const UserFormModal = ({ editEmployeesData, isOpen, closeModal }) => {
 
     useEffect(() => {
         getSkills();

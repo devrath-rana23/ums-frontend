@@ -44,9 +44,25 @@ export const apiEndpoints = {
     url: "/v1/roles/:id",
     method: "delete",
   },
+  roleUpdate: {
+    url: "/v1/roles/:id",
+    method: "put",
+  },
   skillDelete: {
     url: "/v1/skills/:id",
     method: "delete",
+  },
+  skillUpdate: {
+    url: "/v1/skills/:id",
+    method: "put",
+  },
+  employeeEdit: {
+    url: "/v1/employee/edit/:id",
+    method: "get",
+  },
+  employeeUpdate: {
+    url: "/v1/employee/:id",
+    method: "put",
   },
 };
 

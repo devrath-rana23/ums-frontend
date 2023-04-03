@@ -14,6 +14,7 @@ import { notify } from "../../utils/services/notify/notify";
 export const User = () => {
   const { user } = useAuth();
   const [employeesData, setEmployeesData] = useState([]);
+  const [editEmployeesData, setEditEmployeesData] = useState([]);
   const [showCreateSkill, setShowCreateSkill] = useState(false);
   const [showCreateRole, setShowCreateRole] = useState(false);
   const [showListRole, setShowListRole] = useState(false);
@@ -60,12 +61,27 @@ export const User = () => {
     setShowListSkill(false);
   }
 
-  const editHandler = async (userId) => { }
+  const editHandler = async (userId) => {
+    const editUserResponseData = await apiCall(apiConstants.employeeEdit, {
+      loader: true,
+      params: { id: userId },
+    })
+    if (editUserResponseData?.status === 200) {
+      setEditEmployeesData(editUserResponseData?.data);
+      return;
+    } else if (editUserResponseData?.status === 400) {
+      setEditEmployeesData([]);
+      notify.error(editUserResponseData?.message || constantText.SOMETHING_WENT_WRONG)
+      setEditEmployeesData([]);
+      return;
+    }
+    notify.error(constantText.SOMETHING_WENT_WRONG);
+  }
 
   const deleteHandler = async (userId) => {
     const deleteUserResponseData = await apiCall(apiConstants.employeeDelete, {
       loader: true,
-      params: {id:userId},
+      params: { id: userId },
     })
     if (deleteUserResponseData?.status === 200) {
       notify.success(deleteUserResponseData?.message)
@@ -208,7 +224,7 @@ export const User = () => {
           </tbody>
         </table>
       </div>
-      {isOpen && <UserFormModal isOpen={isOpen} closeModal={closeModal} />}
+      {isOpen && <UserFormModal editEmployeesData={editEmployeesData} isOpen={isOpen} closeModal={closeModal} />}
       {showCreateSkill && <CreateSkillModal showCreateSkill={showCreateSkill} closeSkillModal={closeSkillModal} />}
       {showListSkill && <ListSkillModal showListSkill={showListSkill} closeSkillListModal={closeSkillListModal} />}
       {showCreateRole && <CreateRoleModal showCreateRole={showCreateRole} closeRoleModal={closeRoleModal} />}
