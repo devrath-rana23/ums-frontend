@@ -146,7 +146,7 @@ export const User = () => {
                   <td className="text-center p-5" data-label="Date of Birth">{item.employee.birth ?? ""}</td>
                   <td className="text-center p-5" data-label="Salary">{item.employee.salary}</td>
                   <td className="text-center p-5" data-label="Marital Status">{item.employee.martial_status}</td>
-                  <td className="text-center p-5" data-label="Skills">{item.employee.skills}</td>
+                  <td className="text-center p-5" data-label="Skills">{item.employee.skills.map((item) => { return item.name }).join()}</td>
                   <td className="text-center p-5" data-label="Bonus">{item.employee.bonus ?? ""}</td>
                   <td className="text-center p-5" data-label="Phone">{item.employee.contact_info.phone}</td>
                   <td className="text-center p-5" data-label="Email">{item.employee.contact_info.email}</td>
