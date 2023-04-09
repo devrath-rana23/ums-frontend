@@ -27,7 +27,7 @@ export const User = () => {
 
   const closeModal = () => {
     setIsOpen(false);
-    setEditEmployeesData([]);
+    setEditEmployeesData({});
   }
 
   const closeSkillModal = () => {
@@ -72,9 +72,9 @@ export const User = () => {
       openModal();
       return;
     } else if (editUserResponseData?.status === 400) {
-      setEditEmployeesData([]);
+      setEditEmployeesData({});
       notify.error(editUserResponseData?.message || constantText.SOMETHING_WENT_WRONG)
-      setEditEmployeesData([]);
+      setEditEmployeesData({});
       return;
     }
     notify.error(constantText.SOMETHING_WENT_WRONG);

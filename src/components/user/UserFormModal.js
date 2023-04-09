@@ -9,6 +9,7 @@ import { SelectWithAutoComplete } from "../common/select/SelectWithAutoComplete"
 import { DatePicker } from "../common/datePicker/DatePicker";
 import { constantText } from "../../utils/constants/ConstantText";
 import { notify } from "../../utils/services/notify/notify";
+import { config } from "../../utils/config/Config";
 
 export const UserFormModal = ({ editEmployeesData = {}, isOpen, closeModal }) => {
     useEffect(() => {
@@ -51,9 +52,8 @@ export const UserFormModal = ({ editEmployeesData = {}, isOpen, closeModal }) =>
         if (editEmployeesData) {
             userResponseData = await apiCall(apiConstants.employeeUpdate, {
                 loader: true,
-                params: editEmployeesData?.id,
+                params: { id: editEmployeesData?.id },
                 body: postData,
-                headers: { "Content-Type": "multipart/form-data" }
             })
         } else {
             userResponseData = await apiCall(apiConstants.employeeCreate, {
@@ -167,7 +167,7 @@ export const UserFormModal = ({ editEmployeesData = {}, isOpen, closeModal }) =>
                                                 as="h3"
                                                 className="text-lg font-medium leading-6 text-gray-900"
                                             >
-                                                Add New Employee
+                                                {editEmployeesData?.id ? "Edit Employee" : "Add New Employee"}
                                             </Dialog.Title>
                                             <figure className="cursor-pointer" onClick={closeModal}>
                                                 <img src={ImageUrls.close} alt="close" />
@@ -185,14 +185,16 @@ export const UserFormModal = ({ editEmployeesData = {}, isOpen, closeModal }) =>
                                                             <img src={imageBlob} className="w-[143px] h-[143px] rounded-full" alt="avatarPlaceholder" />
                                                         )}
                                                         {!imageBlob && (
-                                                            <img className="w-[143px] h-auto" src={ImageUrls.avatarPlaceholder} alt="avatarPlaceholder" />
+                                                            <img className="w-[143px] h-auto" src={editEmployeesData?.avatar ? `${config.baseImagePath}${editEmployeesData?.avatar}` : ImageUrls.avatarPlaceholder} alt="avatarPlaceholder" />
                                                         )}
-                                                        <label
-                                                            htmlFor="input-file"
-                                                            className="cursor-pointer mt-[15.99px] flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-                                                        >
-                                                            Upload
-                                                        </label>
+                                                        {!editEmployeesData?.avatar &&
+                                                            <label
+                                                                htmlFor="input-file"
+                                                                className="cursor-pointer mt-[15.99px] flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+                                                            >
+                                                                Upload
+                                                            </label>
+                                                        }
                                                         <input accept=".jpg,.jpeg,.png,.svg" onChange={(ev) => getPhoto(ev)} type="file" id='input-file' hidden />
                                                     </div>
                                                     <div className="flex flex-col gap-8">
@@ -282,6 +284,7 @@ export const UserFormModal = ({ editEmployeesData = {}, isOpen, closeModal }) =>
                                                 <div className="flex flex-col gap-8">
                                                     <div className="flex flex-col" >
                                                         <TextField
+                                                            readonly={Boolean(editEmployeesData?.id)}
                                                             nameField={"email"}
                                                             label={"Email"}
                                                             type={"email"}
@@ -292,6 +295,7 @@ export const UserFormModal = ({ editEmployeesData = {}, isOpen, closeModal }) =>
                                                     </div>
                                                     <div className="flex flex-col" >
                                                         <TextField
+                                                            readonly={Boolean(editEmployeesData?.id)}
                                                             nameField={"phone"}
                                                             label={"Phone"}
                                                             type={"number"}

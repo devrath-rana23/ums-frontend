@@ -27,7 +27,7 @@ export const SelectWithAutoComplete = ({
     setSelected(ev);
     return setUserFormInput({ ...userFormInput, skills: ev.map((item) => { return item.id }) });
   };
-console.log(query);
+
   return (
     <div>
       <Combobox value={selected} onChange={handleCHange} multiple={multipleVal}>
