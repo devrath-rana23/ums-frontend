@@ -10,6 +10,7 @@ export const SelectWithAutoComplete = ({
   setSelected = () => { },
   setUserFormInput,
   userFormInput,
+  disabled = false,
 }) => {
   const [query, setQuery] = useState('')
 
@@ -30,7 +31,7 @@ export const SelectWithAutoComplete = ({
 
   return (
     <div>
-      <Combobox value={selected} onChange={handleCHange} multiple={multipleVal}>
+      <Combobox disabled={disabled} value={selected} onChange={handleCHange} multiple={multipleVal}>
         <div className="relative">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
             <Combobox.Label className={`not-italic font-medium text-sm leading-5 text-gray-700`}>Skills</Combobox.Label>

@@ -251,6 +251,7 @@ export const UserFormModal = ({ editEmployeesData = {}, isOpen, closeModal }) =>
                                                                     multipleVal={true}
                                                                     setUserFormInput={setUserFormInput}
                                                                     userFormInput={userFormInput}
+                                                                    disabled={Boolean(editEmployeesData?.id)}
                                                                 />
                                                             </div>
                                                             <div className="flex flex-1 flex-col" >
