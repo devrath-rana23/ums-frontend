@@ -52,6 +52,10 @@ export const apiEndpoints = {
     url: "/v1/skills/:id",
     method: "delete",
   },
+  skillEdit: {
+    url: "/v1/skills/:id",
+    method: "get",
+  },
   skillUpdate: {
     url: "/v1/skills/:id",
     method: "put",

@@ -65,7 +65,7 @@ export const CreateRoleModal = ({ closeRoleModal = () => { }, showCreateRole = f
                                             as="h3"
                                             className="text-lg font-medium leading-6 text-gray-900"
                                         >
-                                            Add New Skill
+                                            Add New Role
                                         </Dialog.Title>
                                         <figure className="cursor-pointer" onClick={closeRoleModal}>
                                             <img src={ImageUrls.close} alt="close" />

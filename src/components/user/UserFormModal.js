@@ -49,7 +49,7 @@ export const UserFormModal = ({ editEmployeesData = {}, isOpen, closeModal }) =>
         ev.preventDefault();
         const postData = userFormInput;
         let userResponseData = "";
-        if (editEmployeesData) {
+        if (editEmployeesData?.id) {
             userResponseData = await apiCall(apiConstants.employeeUpdate, {
                 loader: true,
                 params: { id: editEmployeesData?.id },

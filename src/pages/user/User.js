@@ -15,6 +15,7 @@ export const User = () => {
   const { user } = useAuth();
   const [employeesData, setEmployeesData] = useState([]);
   const [editEmployeesData, setEditEmployeesData] = useState({});
+  const [editSkillsData, setEditSkillsData] = useState({});
   const [showCreateSkill, setShowCreateSkill] = useState(false);
   const [showCreateRole, setShowCreateRole] = useState(false);
   const [showListRole, setShowListRole] = useState(false);
@@ -32,6 +33,7 @@ export const User = () => {
 
   const closeSkillModal = () => {
     setShowCreateSkill(false);
+    setEditSkillsData({});
   }
 
   const openSkillModal = () => {
@@ -74,9 +76,27 @@ export const User = () => {
     } else if (editUserResponseData?.status === 400) {
       setEditEmployeesData({});
       notify.error(editUserResponseData?.message || constantText.SOMETHING_WENT_WRONG)
-      setEditEmployeesData({});
       return;
     }
+    setEditEmployeesData({});
+    notify.error(constantText.SOMETHING_WENT_WRONG);
+  }
+
+  const editSkillHandler = async (skillId) => {
+    const editSkillResponseData = await apiCall(apiConstants.skillEdit, {
+      loader: true,
+      params: { id: skillId },
+    })
+    if (editSkillResponseData?.status === 200) {
+      setEditSkillsData(editSkillResponseData?.data);
+      openSkillModal();
+      return;
+    } else if (editSkillResponseData?.status === 400) {
+      setEditSkillsData({});
+      notify.error(editSkillResponseData?.message || constantText.SOMETHING_WENT_WRONG)
+      return;
+    }
+    setEditSkillsData({});
     notify.error(constantText.SOMETHING_WENT_WRONG);
   }
 
@@ -227,8 +247,8 @@ export const User = () => {
         </table>
       </div>
       {isOpen && <UserFormModal editEmployeesData={editEmployeesData} isOpen={isOpen} closeModal={closeModal} />}
-      {showCreateSkill && <CreateSkillModal showCreateSkill={showCreateSkill} closeSkillModal={closeSkillModal} />}
-      {showListSkill && <ListSkillModal showListSkill={showListSkill} closeSkillListModal={closeSkillListModal} />}
+      {showCreateSkill && <CreateSkillModal closeSkillListModal={closeSkillListModal} editSkillsData={editSkillsData} showCreateSkill={showCreateSkill} closeSkillModal={closeSkillModal} />}
+      {showListSkill && <ListSkillModal editSkillHandler={editSkillHandler} showListSkill={showListSkill} closeSkillListModal={closeSkillListModal} />}
       {showCreateRole && <CreateRoleModal showCreateRole={showCreateRole} closeRoleModal={closeRoleModal} />}
       {showListRole && <ListRoleModal showListRole={showListRole} closeRoleListModal={closeRoleListModal} />}
     </>

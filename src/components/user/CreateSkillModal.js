@@ -6,9 +6,9 @@ import { apiCall } from "../../utils/services/api/api";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
 import { notify } from "../../utils/services/notify/notify";
 
-export const CreateSkillModal = ({ closeSkillModal = () => { }, showCreateSkill = false }) => {
+export const CreateSkillModal = ({ closeSkillListModal = () => { }, closeSkillModal = () => { }, showCreateSkill = false, editSkillsData = {} }) => {
     const [userFormInput, setUserFormInput] = useState({
-        name: ""
+        name: editSkillsData?.name ?? "",
     })
 
     const onchangeField = (ev, fieldName) => {
@@ -20,13 +20,26 @@ export const CreateSkillModal = ({ closeSkillModal = () => { }, showCreateSkill 
 
     const submitForm = async () => {
         const postData = userFormInput;
-        const skillDataResponse = await apiCall(apiConstants.skillCreate, { body: postData, loader: true });
-        if (skillDataResponse?.status === 200 && skillDataResponse?.data && Array.isArray(skillDataResponse?.data)) {
-            notify.success(skillDataResponse?.message);
+        let skillDataResponse = "";
+        if (editSkillsData?.id) {
+            skillDataResponse = await apiCall(apiConstants.skillUpdate, {
+                loader: true,
+                params: { id: editSkillsData?.id },
+                body: postData,
+            })
+        } else {
+            skillDataResponse = await apiCall(apiConstants.skillCreate, {
+                loader: true,
+                body: postData,
+            })
+        }
+        if (skillDataResponse?.status === 200) {
+            notify.success(skillDataResponse?.message)
             closeSkillModal();
+            closeSkillListModal();
             return;
         } else if (skillDataResponse?.status === 400) {
-            notify.error(skillDataResponse?.message || constantText.SOMETHING_WENT_WRONG);
+            notify.error(skillDataResponse?.message || constantText.SOMETHING_WENT_WRONG)
             return;
         }
         notify.error(constantText.SOMETHING_WENT_WRONG);

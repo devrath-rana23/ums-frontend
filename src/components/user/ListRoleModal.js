@@ -71,7 +71,7 @@ export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = f
                                             as="h3"
                                             className="text-lg font-medium leading-6 text-gray-900"
                                         >
-                                            Skills
+                                            Roles
                                         </Dialog.Title>
                                         <figure className="cursor-pointer" onClick={closeRoleListModal}>
                                             <img src={ImageUrls.close} alt="close" />

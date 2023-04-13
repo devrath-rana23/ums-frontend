@@ -6,10 +6,9 @@ import { apiCall } from "../../utils/services/api/api";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
 import { notify } from "../../utils/services/notify/notify";
 
-export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill = false }) => {
+export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill = false, editSkillHandler = () => { } }) => {
 
     const [skillsList, setSkillsList] = useState([]);
-    const editHandler = (userId) => { }
     const deleteHandler = async (skillId) => {
         const deleteUserResponseData = await apiCall(apiConstants.skillDelete, {
             loader: true,
@@ -94,7 +93,7 @@ export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill 
                                                         <td><button
                                                             type="button"
                                                             className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
-                                                            onClick={() => editHandler(item.id)}
+                                                            onClick={() => editSkillHandler(item.id)}
                                                         >
                                                             Edit
                                                         </button></td>
