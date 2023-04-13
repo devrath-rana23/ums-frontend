@@ -33,8 +33,8 @@ export const ListRoleModal = ({ editRoleHandler = () => { }, closeRoleListModal 
 
     const getRolesList = async () => {
         const rolesListDataResponse = await apiCall(apiConstants.roleList, { loader: true });
-        if (rolesListDataResponse?.data?.data.length > 0 && rolesListDataResponse?.data?.data && Array.isArray(rolesListDataResponse?.data?.data)) {
-            setRolesList(rolesListDataResponse?.data?.data);
+        if (rolesListDataResponse?.data?.length > 0 && rolesListDataResponse?.data && Array.isArray(rolesListDataResponse?.data)) {
+            setRolesList(rolesListDataResponse?.data);
         }
     };
 
