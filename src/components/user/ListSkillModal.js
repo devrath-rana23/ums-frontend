@@ -37,6 +37,18 @@ export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill 
         }
     };
 
+    const handleDownload = async () => {
+        const skillsExportDataResponse = await apiCall(apiConstants.exportSkill, { loader: true });
+        if (skillsExportDataResponse?.status === 200) {
+            notify.success(skillsExportDataResponse?.message)
+            return;
+        } else if (skillsExportDataResponse?.status === 400) {
+            notify.error(skillsExportDataResponse?.message || constantText.SOMETHING_WENT_WRONG)
+            return;
+        }
+        notify.error(constantText.SOMETHING_WENT_WRONG);
+    }
+
     return (<>
         <Transition appear show={showListSkill} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={closeSkillListModal}>
@@ -78,6 +90,15 @@ export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill 
                                     </div>
                                 </header>
                                 <div className="py-8 border border-[1px_0px_solid_#E5E7EB]">
+                                    <div className="flex justify-end mx-8 pb-3">
+                                        <button
+                                            type="button"
+                                            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+                                            onClick={handleDownload}
+                                        >
+                                            Export
+                                        </button>
+                                    </div>
                                     <section className="mx-8">
                                         <table className="box-border border border shadow-[0px_1px_3px_rgba(0,0,0,0.1),0px_1px_2px_rgba(0,0,0,0.06)] rounded-lg border-solid">
                                             <thead className="bg-orange-500 text-center">

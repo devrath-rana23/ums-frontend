@@ -149,6 +149,18 @@ export const User = () => {
     }
   }
 
+  const handleDownload = async () => {
+    const employeesExportDataResponse = await apiCall(apiConstants.exportEmployee, { loader: true });
+    if (employeesExportDataResponse?.status === 200) {
+      notify.success(employeesExportDataResponse?.message)
+      return;
+    } else if (employeesExportDataResponse?.status === 400) {
+      notify.error(employeesExportDataResponse?.message || constantText.SOMETHING_WENT_WRONG)
+      return;
+    }
+    notify.error(constantText.SOMETHING_WENT_WRONG);
+  }
+
   return (
     <>
       <div className="flex justify-center">
@@ -201,6 +213,13 @@ export const User = () => {
               Show Roles
             </button>
           )}
+          <button
+            type="button"
+            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+            onClick={handleDownload}
+          >
+            Export Employess
+          </button>
         </div>
       </div>
       <div className="overflow-auto mx-10">

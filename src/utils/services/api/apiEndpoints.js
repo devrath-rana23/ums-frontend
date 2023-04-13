@@ -36,9 +36,17 @@ export const apiEndpoints = {
     url: "/v1/roles",
     method: "get",
   },
+  exportRole: {
+    url: "/v1/export-csv/role",
+    method: "get",
+  },
   employeeDelete: {
     url: "/v1/employee/:id",
     method: "delete",
+  },
+  exportEmployee: {
+    url: "/v1/export-csv/employee",
+    method: "get",
   },
   roleDelete: {
     url: "/v1/roles/:id",
@@ -63,6 +71,10 @@ export const apiEndpoints = {
   skillUpdate: {
     url: "/v1/skills/:id",
     method: "put",
+  },
+  exportSkill: {
+    url: "/v1/export-csv/skill",
+    method: "get",
   },
   employeeEdit: {
     url: "/v1/employee/edit/:id",
