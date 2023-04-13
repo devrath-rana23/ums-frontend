@@ -44,6 +44,10 @@ export const apiEndpoints = {
     url: "/v1/roles/:id",
     method: "delete",
   },
+  roleEdit: {
+    url: "/v1/roles/:id",
+    method: "get",
+  },
   roleUpdate: {
     url: "/v1/roles/:id",
     method: "put",
