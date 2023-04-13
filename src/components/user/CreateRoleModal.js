@@ -6,9 +6,9 @@ import { apiCall } from "../../utils/services/api/api";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
 import { notify } from "../../utils/services/notify/notify";
 
-export const CreateRoleModal = ({ closeRoleModal = () => { }, showCreateRole = false }) => {
+export const CreateRoleModal = ({ closeRoleListModal = () => { }, editRolesData, closeRoleModal = () => { }, showCreateRole = false }) => {
     const [userFormInput, setUserFormInput] = useState({
-        name: ""
+        name: editRolesData?.name ?? "",
     })
 
     const onchangeField = (ev, fieldName) => {
@@ -20,17 +20,31 @@ export const CreateRoleModal = ({ closeRoleModal = () => { }, showCreateRole = f
 
     const submitForm = async () => {
         const postData = userFormInput;
-        const roleDataResponse = await apiCall(apiConstants.roleCreate, { body: postData, loader: true });
-        if (roleDataResponse?.status === 200 && roleDataResponse?.data && Array.isArray(roleDataResponse?.data)) {
-            notify.success(roleDataResponse?.message);
+        let roleDataResponse = "";
+        if (editRolesData?.id) {
+            roleDataResponse = await apiCall(apiConstants.roleUpdate, {
+                loader: true,
+                params: { id: editRolesData?.id },
+                body: postData,
+            })
+        } else {
+            roleDataResponse = await apiCall(apiConstants.roleCreate, {
+                loader: true,
+                body: postData,
+            })
+        }
+        if (roleDataResponse?.status === 200) {
+            notify.success(roleDataResponse?.message)
             closeRoleModal();
+            closeRoleListModal();
             return;
         } else if (roleDataResponse?.status === 400) {
-            notify.error(roleDataResponse?.message || constantText.SOMETHING_WENT_WRONG);
+            notify.error(roleDataResponse?.message || constantText.SOMETHING_WENT_WRONG)
             return;
         }
         notify.error(constantText.SOMETHING_WENT_WRONG);
     };
+
 
     return (<>
         <Transition appear show={showCreateRole} as={Fragment}>

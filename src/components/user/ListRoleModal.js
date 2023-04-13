@@ -7,10 +7,9 @@ import { apiCall } from "../../utils/services/api/api";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
 import { notify } from "../../utils/services/notify/notify";
 
-export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = false }) => {
+export const ListRoleModal = ({ editRoleHandler = () => { }, closeRoleListModal = () => { }, showListRole = false }) => {
     const { user } = useAuth();
     const [rolesList, setRolesList] = useState([]);
-    const editHandler = (userId) => { }
     const deleteHandler = async (roleId) => {
         const deleteRoleResponseData = await apiCall(apiConstants.roleDelete, {
             loader: true,
@@ -98,7 +97,7 @@ export const ListRoleModal = ({ closeRoleListModal = () => { }, showListRole = f
                                                                 <td><button
                                                                     type="button"
                                                                     className={`flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  ${item.id === constantText.admin || item.id === constantText.superadmin ? "bg-orange-100" : "bg-orange-500"} text-white`}
-                                                                    onClick={() => editHandler(item.id)}
+                                                                    onClick={() => editRoleHandler(item.id)}
                                                                     disabled={item?.id === constantText.superadmin || item?.id === constantText.admin ? true : false}
                                                                 >
                                                                     Edit

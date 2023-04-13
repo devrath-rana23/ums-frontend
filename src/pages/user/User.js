@@ -16,6 +16,7 @@ export const User = () => {
   const [employeesData, setEmployeesData] = useState([]);
   const [editEmployeesData, setEditEmployeesData] = useState({});
   const [editSkillsData, setEditSkillsData] = useState({});
+  const [editRolesData, setEditRolesData] = useState({});
   const [showCreateSkill, setShowCreateSkill] = useState(false);
   const [showCreateRole, setShowCreateRole] = useState(false);
   const [showListRole, setShowListRole] = useState(false);
@@ -42,6 +43,7 @@ export const User = () => {
 
   const closeRoleModal = () => {
     setShowCreateRole(false);
+    setEditRolesData({})
   }
 
   const openRoleModal = () => {
@@ -97,6 +99,24 @@ export const User = () => {
       return;
     }
     setEditSkillsData({});
+    notify.error(constantText.SOMETHING_WENT_WRONG);
+  }
+
+  const editRoleHandler = async (roleId) => {
+    const editRoleResponseData = await apiCall(apiConstants.roleEdit, {
+      loader: true,
+      params: { id: roleId },
+    })
+    if (editRoleResponseData?.status === 200) {
+      setEditRolesData(editRoleResponseData?.data);
+      openRoleModal();
+      return;
+    } else if (editRoleResponseData?.status === 400) {
+      setEditRolesData({});
+      notify.error(editRoleResponseData?.message || constantText.SOMETHING_WENT_WRONG)
+      return;
+    }
+    setEditRolesData({});
     notify.error(constantText.SOMETHING_WENT_WRONG);
   }
 
@@ -249,8 +269,8 @@ export const User = () => {
       {isOpen && <UserFormModal editEmployeesData={editEmployeesData} isOpen={isOpen} closeModal={closeModal} />}
       {showCreateSkill && <CreateSkillModal closeSkillListModal={closeSkillListModal} editSkillsData={editSkillsData} showCreateSkill={showCreateSkill} closeSkillModal={closeSkillModal} />}
       {showListSkill && <ListSkillModal editSkillHandler={editSkillHandler} showListSkill={showListSkill} closeSkillListModal={closeSkillListModal} />}
-      {showCreateRole && <CreateRoleModal showCreateRole={showCreateRole} closeRoleModal={closeRoleModal} />}
-      {showListRole && <ListRoleModal showListRole={showListRole} closeRoleListModal={closeRoleListModal} />}
+      {showCreateRole && <CreateRoleModal closeRoleListModal={closeRoleListModal} editRolesData={editRolesData} showCreateRole={showCreateRole} closeRoleModal={closeRoleModal} />}
+      {showListRole && <ListRoleModal editRoleHandler={editRoleHandler} showListRole={showListRole} closeRoleListModal={closeRoleListModal} />}
     </>
   );
 };
