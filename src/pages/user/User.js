@@ -10,6 +10,7 @@ import { useAuth } from "../../hooks";
 import { constantText } from "../../utils/constants/ConstantText";
 import { UserFormModal } from "../../components/user/UserFormModal";
 import { notify } from "../../utils/services/notify/notify";
+import { ListExportedFilesModal } from "../../components/user/ListExportedFilesModal";
 
 export const User = () => {
   const { user } = useAuth();
@@ -21,6 +22,7 @@ export const User = () => {
   const [showCreateRole, setShowCreateRole] = useState(false);
   const [showListRole, setShowListRole] = useState(false);
   const [showListSkill, setShowListSkill] = useState(false);
+  const [showListExportedFiles, setShowListExportedFiles] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
@@ -64,6 +66,14 @@ export const User = () => {
 
   const closeSkillListModal = () => {
     setShowListSkill(false);
+  }
+
+  const openExportFilesListModal = () => {
+    setShowListExportedFiles(true);
+  }
+
+  const closeExportFilesListModal = () => {
+    setShowListExportedFiles(false);
   }
 
   const editHandler = async (userId) => {
@@ -220,6 +230,13 @@ export const User = () => {
           >
             Export Employess
           </button>
+          <button
+            type="button"
+            className="flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  bg-orange-500 text-white"
+            onClick={openExportFilesListModal}
+          >
+            Exported Files
+          </button>
         </div>
       </div>
       <div className="overflow-auto mx-10">
@@ -288,6 +305,7 @@ export const User = () => {
       {isOpen && <UserFormModal editEmployeesData={editEmployeesData} isOpen={isOpen} closeModal={closeModal} />}
       {showCreateSkill && <CreateSkillModal closeSkillListModal={closeSkillListModal} editSkillsData={editSkillsData} showCreateSkill={showCreateSkill} closeSkillModal={closeSkillModal} />}
       {showListSkill && <ListSkillModal editSkillHandler={editSkillHandler} showListSkill={showListSkill} closeSkillListModal={closeSkillListModal} />}
+      {showListExportedFiles && <ListExportedFilesModal showListExportedFiles={showListExportedFiles} closeExportFilesListModal={closeExportFilesListModal} />}
       {showCreateRole && <CreateRoleModal closeRoleListModal={closeRoleListModal} editRolesData={editRolesData} showCreateRole={showCreateRole} closeRoleModal={closeRoleModal} />}
       {showListRole && <ListRoleModal editRoleHandler={editRoleHandler} showListRole={showListRole} closeRoleListModal={closeRoleListModal} />}
     </>

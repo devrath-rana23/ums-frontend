@@ -84,6 +84,10 @@ export const apiEndpoints = {
     url: "/v1/employee/:id",
     method: "put",
   },
+  downloadFileList: {
+    url: "/v1/download/list",
+    method: "get",
+  },
 };
 
 export const apiConstants = Object.keys(apiEndpoints).reduce((cb, iv) => {
