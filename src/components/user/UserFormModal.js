@@ -85,8 +85,8 @@ export const UserFormModal = ({ editEmployeesData = {}, isOpen, closeModal }) =>
 
     const getRoles = async () => {
         const rolesListResponse = await apiCall(apiConstants.roleList, { loader: true });
-        if (rolesListResponse?.data?.data && Array.isArray(rolesListResponse?.data?.data)) {
-            setRolesList(rolesListResponse?.data?.data);
+        if (rolesListResponse?.data && Array.isArray(rolesListResponse?.data)) {
+            setRolesList(rolesListResponse?.data);
         }
     };
 
