@@ -11,6 +11,8 @@ import { constantText } from "../../utils/constants/ConstantText";
 import { UserFormModal } from "../../components/user/UserFormModal";
 import { notify } from "../../utils/services/notify/notify";
 import { ListExportedFilesModal } from "../../components/user/ListExportedFilesModal";
+import Pagination from "../../components/common/pagination/Pagination";
+import { createQueryParams } from "../../utils/Utils";
 
 export const User = () => {
   const { user } = useAuth();
@@ -24,6 +26,29 @@ export const User = () => {
   const [showListSkill, setShowListSkill] = useState(false);
   const [showListExportedFiles, setShowListExportedFiles] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [projectFilter, setprojectFilter] = useState({
+    search: "",
+    sortField: "",
+    sortOrder: "",
+    page: 1,
+    limit: 10,
+  });
+  const [totalCount, setPageCount] = useState(0);
+
+
+  const onChangeFilter = (ev, type) => {
+    const data = {
+      ...projectFilter,
+      [type]: ev.target.value,
+    };
+    data.page = 1;
+    setprojectFilter(data);
+  };
+
+  const onChangePage = (pageNumber) => {
+    const data = { ...projectFilter, page: pageNumber };
+    setprojectFilter(data);
+  };
 
   const openModal = () => {
     setIsOpen(true);
@@ -153,9 +178,21 @@ export const User = () => {
   }, []);
 
   const getEmployeeData = async () => {
-    const employeeDataResponse = await apiCall(apiConstants.employeeList, { loader: true });
+    const projectFilterCopy = { ...projectFilter };
+    const queryParams = createQueryParams({
+      page: projectFilterCopy.page,
+      limit: projectFilterCopy.limit,
+      search: projectFilterCopy.search,
+      sort: projectFilterCopy.sortOrder,
+      sort_field: projectFilterCopy.sortField,
+    });
+    const employeeDataResponse = await apiCall(apiConstants.employeeList, {
+      loader: true,
+      queryParams,
+    });
     if (employeeDataResponse?.data?.data && Array.isArray(employeeDataResponse?.data?.data)) {
       setEmployeesData(employeeDataResponse?.data?.data);
+      setPageCount(employeeDataResponse.data.total);
     }
   }
 
@@ -301,6 +338,18 @@ export const User = () => {
             }
           </tbody>
         </table>
+      </div>
+      <div className="mx-10">
+        <Pagination
+          className="pagination-bar"
+          siblingCount={0}
+          totalCount={totalCount}
+          page={projectFilter.page}
+          limit={projectFilter.limit}
+          currentPageCount={employeesData.length}
+          onChangePage={(pageNumber) => onChangePage(pageNumber)}
+          onChangePageLimit={(ev) => onChangeFilter(ev, "limit")}
+        />
       </div>
       {isOpen && <UserFormModal editEmployeesData={editEmployeesData} isOpen={isOpen} closeModal={closeModal} />}
       {showCreateSkill && <CreateSkillModal closeSkillListModal={closeSkillListModal} editSkillsData={editSkillsData} showCreateSkill={showCreateSkill} closeSkillModal={closeSkillModal} />}
