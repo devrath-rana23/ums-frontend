@@ -5,24 +5,52 @@ import ImageUrls from "../../utils/constants/ImageUrls";
 import { apiCall } from "../../utils/services/api/api";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
 import { notify } from "../../utils/services/notify/notify";
+import { createQueryParams } from "../../utils/Utils";
+import Pagination from "../common/pagination/Pagination";
 
 export const ListExportedFilesModal = ({ closeExportFilesListModal = () => { }, showListExportedFiles = false }) => {
 
     const [exportedFilesList, setExportedFilesList] = useState([]);
-
+    const [downloadsFileFilter, setDownloadsFileFilter] = useState({
+        page: 1,
+        limit: 10,
+    });
+    const [totalCount, setPageCount] = useState(0);
 
     useEffect(() => {
         getExportedList();
 
-    }, []);
+    }, [downloadsFileFilter]);
 
     const getExportedList = async () => {
-        const exportedFilesListDataResponse = await apiCall(apiConstants.downloadFileList, { loader: true });
+        const downloadsFileFilterCopy = { ...downloadsFileFilter };
+        const queryParams = createQueryParams({
+            page: downloadsFileFilterCopy.page,
+            limit: downloadsFileFilterCopy.limit,
+        });
+        const exportedFilesListDataResponse = await apiCall(apiConstants.downloadFileList, {
+            loader: true
+            , queryParams,
+        });
         if (exportedFilesListDataResponse?.data?.data.length > 0 && exportedFilesListDataResponse?.data?.data && Array.isArray(exportedFilesListDataResponse?.data?.data)) {
             setExportedFilesList(exportedFilesListDataResponse?.data?.data);
+            setPageCount(exportedFilesListDataResponse.data.total);
         }
     };
 
+    const onChangeFilter = (ev, type) => {
+        const data = {
+            ...downloadsFileFilter,
+            [type]: ev.target.value,
+        };
+        data.page = 1;
+        setDownloadsFileFilter(data);
+    };
+
+    const onChangePage = (pageNumber) => {
+        const data = { ...downloadsFileFilter, page: pageNumber };
+        setDownloadsFileFilter(data);
+    };
 
 
     return (<>
@@ -93,6 +121,16 @@ export const ListExportedFilesModal = ({ closeExportFilesListModal = () => { }, 
                                                     </tr>
                                                 )}
                                             </tbody>
+                                            <Pagination
+                                                className="pagination-bar"
+                                                siblingCount={0}
+                                                totalCount={totalCount}
+                                                page={downloadsFileFilter.page}
+                                                limit={downloadsFileFilter.limit}
+                                                currentPageCount={exportedFilesList.length}
+                                                onChangePage={(pageNumber) => onChangePage(pageNumber)}
+                                                onChangePageLimit={(ev) => onChangeFilter(ev, "limit")}
+                                            />
                                         </table>
                                     </section>
                                 </div>

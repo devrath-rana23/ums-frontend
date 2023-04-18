@@ -5,9 +5,16 @@ import ImageUrls from "../../utils/constants/ImageUrls";
 import { apiCall } from "../../utils/services/api/api";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
 import { notify } from "../../utils/services/notify/notify";
+import Pagination from "../common/pagination/Pagination";
+import { createQueryParams } from "../../utils/Utils";
 
 export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill = false, editSkillHandler = () => { } }) => {
 
+    const [skillFilter, setSkillFilter] = useState({
+        page: 1,
+        limit: 10,
+    });
+    const [totalCount, setPageCount] = useState(0);
     const [skillsList, setSkillsList] = useState([]);
     const deleteHandler = async (skillId) => {
         const deleteUserResponseData = await apiCall(apiConstants.skillDelete, {
@@ -25,15 +32,35 @@ export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill 
         notify.error(constantText.SOMETHING_WENT_WRONG);
     }
 
+    const onChangeFilter = (ev, type) => {
+        const data = {
+            ...skillFilter,
+            [type]: ev.target.value,
+        };
+        data.page = 1;
+        setSkillFilter(data);
+    };
+
+    const onChangePage = (pageNumber) => {
+        const data = { ...skillFilter, page: pageNumber };
+        setSkillFilter(data);
+    };
+
     useEffect(() => {
         getSkillsList();
 
-    }, []);
+    }, [skillFilter]);
 
     const getSkillsList = async () => {
-        const skillsListDataResponse = await apiCall(apiConstants.skillList, { loader: true });
+        const skillFilterCopy = { ...skillFilter };
+        const queryParams = createQueryParams({
+            page: skillFilterCopy.page,
+            limit: skillFilterCopy.limit,
+        });
+        const skillsListDataResponse = await apiCall(apiConstants.skillList, { loader: true, queryParams, });
         if (skillsListDataResponse?.data?.data.length > 0 && skillsListDataResponse?.data?.data && Array.isArray(skillsListDataResponse?.data?.data)) {
             setSkillsList(skillsListDataResponse?.data?.data);
+            setPageCount(skillsListDataResponse.data.total);
         }
     };
 
@@ -135,6 +162,16 @@ export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill 
                                                     </tr>
                                                 )}
                                             </tbody>
+                                            <Pagination
+                                                className="pagination-bar"
+                                                siblingCount={0}
+                                                totalCount={totalCount}
+                                                page={skillFilter.page}
+                                                limit={skillFilter.limit}
+                                                currentPageCount={skillsList.length}
+                                                onChangePage={(pageNumber) => onChangePage(pageNumber)}
+                                                onChangePageLimit={(ev) => onChangeFilter(ev, "limit")}
+                                            />
                                         </table>
                                     </section>
                                 </div>

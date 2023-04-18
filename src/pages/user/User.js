@@ -26,10 +26,7 @@ export const User = () => {
   const [showListSkill, setShowListSkill] = useState(false);
   const [showListExportedFiles, setShowListExportedFiles] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [projectFilter, setprojectFilter] = useState({
-    search: "",
-    sortField: "",
-    sortOrder: "",
+  const [employeeFilter, setEmployeeFilter] = useState({
     page: 1,
     limit: 10,
   });
@@ -38,16 +35,16 @@ export const User = () => {
 
   const onChangeFilter = (ev, type) => {
     const data = {
-      ...projectFilter,
+      ...employeeFilter,
       [type]: ev.target.value,
     };
     data.page = 1;
-    setprojectFilter(data);
+    setEmployeeFilter(data);
   };
 
   const onChangePage = (pageNumber) => {
-    const data = { ...projectFilter, page: pageNumber };
-    setprojectFilter(data);
+    const data = { ...employeeFilter, page: pageNumber };
+    setEmployeeFilter(data);
   };
 
   const openModal = () => {
@@ -175,16 +172,13 @@ export const User = () => {
 
   useEffect(() => {
     getEmployeeData();
-  }, []);
+  }, [employeeFilter]);
 
   const getEmployeeData = async () => {
-    const projectFilterCopy = { ...projectFilter };
+    const employeeFilterCopy = { ...employeeFilter };
     const queryParams = createQueryParams({
-      page: projectFilterCopy.page,
-      limit: projectFilterCopy.limit,
-      search: projectFilterCopy.search,
-      sort: projectFilterCopy.sortOrder,
-      sort_field: projectFilterCopy.sortField,
+      page: employeeFilterCopy.page,
+      limit: employeeFilterCopy.limit,
     });
     const employeeDataResponse = await apiCall(apiConstants.employeeList, {
       loader: true,
@@ -344,8 +338,8 @@ export const User = () => {
           className="pagination-bar"
           siblingCount={0}
           totalCount={totalCount}
-          page={projectFilter.page}
-          limit={projectFilter.limit}
+          page={employeeFilter.page}
+          limit={employeeFilter.limit}
           currentPageCount={employeesData.length}
           onChangePage={(pageNumber) => onChangePage(pageNumber)}
           onChangePageLimit={(ev) => onChangeFilter(ev, "limit")}
