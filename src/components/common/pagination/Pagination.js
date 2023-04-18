@@ -14,8 +14,8 @@ const Pagination = (props) => {
     className,
     page,
     currentPageCount,
-    onChangePage = () => {},
-    onChangePageLimit = () => {},
+    onChangePage = () => { },
+    onChangePageLimit = () => { },
   } = props;
 
   const paginationRange = usePagination({
@@ -24,10 +24,6 @@ const Pagination = (props) => {
     siblingCount,
     limit,
   });
-
-  if (page === 0 || paginationRange.length < 2) {
-    return null;
-  }
 
   const onNext = () => {
     onChangePage(page + 1);
@@ -60,7 +56,7 @@ const Pagination = (props) => {
           className={classnames("pagination-item", {
             disabled: page === 1,
           })}
-          onClick={page === 1 ? () => {} : onPrevious}
+          onClick={page === 1 ? () => { } : onPrevious}
           src={pagination_left_arrow}
           alt="pagination_left_arrow"
         />
@@ -90,7 +86,7 @@ const Pagination = (props) => {
             disabled: page === lastPage,
             borderRight: true,
           })}
-          onClick={page === lastPage ? () => {} : onNext}
+          onClick={page === lastPage ? () => { } : onNext}
           src={pagination_right_arrow}
           alt="pagination_right_arrow"
         />
