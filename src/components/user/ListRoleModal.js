@@ -40,15 +40,20 @@ export const ListRoleModal = ({ editRoleHandler = () => { }, closeRoleListModal 
 
     const handleDownload = async () => {
         const rolesExportDataResponse = await apiCall(apiConstants.exportRole, { loader: true });
-        if (rolesExportDataResponse?.status === 200) {
-            notify.success(rolesExportDataResponse?.message)
+        if (rolesExportDataResponse.status === 200) {
+            const blob = new Blob([rolesExportDataResponse.data], { type: "text/csv" });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.setAttribute("href", url);
+            a.setAttribute("download", "project-team-member.csv");
+            a.click();
             return;
         } else if (rolesExportDataResponse?.status === 400) {
             notify.error(rolesExportDataResponse?.message || constantText.SOMETHING_WENT_WRONG)
             return;
         }
         notify.error(constantText.SOMETHING_WENT_WRONG);
-    }
+    };
 
     return (<>
         <Transition appear show={showListRole} as={Fragment}>
