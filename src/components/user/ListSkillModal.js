@@ -12,7 +12,7 @@ export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill 
 
     const [skillFilter, setSkillFilter] = useState({
         page: 1,
-        limit: 10,
+        limit: 1,
     });
     const [totalCount, setPageCount] = useState(0);
     const [skillsList, setSkillsList] = useState([]);
@@ -162,17 +162,17 @@ export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill 
                                                     </tr>
                                                 )}
                                             </tbody>
-                                            <Pagination
-                                                className="pagination-bar"
-                                                siblingCount={0}
-                                                totalCount={totalCount}
-                                                page={skillFilter.page}
-                                                limit={skillFilter.limit}
-                                                currentPageCount={skillsList.length}
-                                                onChangePage={(pageNumber) => onChangePage(pageNumber)}
-                                                onChangePageLimit={(ev) => onChangeFilter(ev, "limit")}
-                                            />
                                         </table>
+                                        <Pagination
+                                            className="pagination-bar"
+                                            siblingCount={0}
+                                            totalCount={totalCount}
+                                            page={skillFilter.page}
+                                            limit={skillFilter.limit}
+                                            currentPageCount={skillsList.length}
+                                            onChangePage={(pageNumber) => onChangePage(pageNumber)}
+                                            onChangePageLimit={(ev) => onChangeFilter(ev, "limit")}
+                                        />
                                     </section>
                                 </div>
                             </Dialog.Panel>

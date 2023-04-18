@@ -13,7 +13,7 @@ export const ListExportedFilesModal = ({ closeExportFilesListModal = () => { }, 
     const [exportedFilesList, setExportedFilesList] = useState([]);
     const [downloadsFileFilter, setDownloadsFileFilter] = useState({
         page: 1,
-        limit: 10,
+        limit: 1,
     });
     const [totalCount, setPageCount] = useState(0);
 

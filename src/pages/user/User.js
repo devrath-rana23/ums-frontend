@@ -28,7 +28,7 @@ export const User = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [employeeFilter, setEmployeeFilter] = useState({
     page: 1,
-    limit: 10,
+    limit: 1,
   });
   const [totalCount, setPageCount] = useState(0);
 

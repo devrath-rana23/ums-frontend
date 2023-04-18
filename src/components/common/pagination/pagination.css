@@ -33,7 +33,7 @@
 }
 
 .pagination-bar > .selected {
-  background: #4338ca;
+  background: #cc730d;
   color: #fff;
 }
 
@@ -44,11 +44,11 @@
 .pagination-item {
   cursor: pointer;
   padding: 10px;
-  color: #4338ca;
+  color: #cc730d;
 }
 
 .selected {
-  background: #4338ca;
+  background: #cc730d;
   color: #fff;
 }
 
