@@ -12,7 +12,7 @@ export const ListSkillModal = ({ closeSkillListModal = () => { }, showListSkill 
 
     const [skillFilter, setSkillFilter] = useState({
         page: 1,
-        limit: 1,
+        limit: 10,
     });
     const [totalCount, setPageCount] = useState(0);
     const [skillsList, setSkillsList] = useState([]);

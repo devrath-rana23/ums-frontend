@@ -13,7 +13,7 @@ export const ListExportedFilesModal = ({ closeExportFilesListModal = () => { }, 
     const [exportedFilesList, setExportedFilesList] = useState([]);
     const [downloadsFileFilter, setDownloadsFileFilter] = useState({
         page: 1,
-        limit: 1,
+        limit: 10,
     });
     const [totalCount, setPageCount] = useState(0);
 
@@ -121,17 +121,17 @@ export const ListExportedFilesModal = ({ closeExportFilesListModal = () => { }, 
                                                     </tr>
                                                 )}
                                             </tbody>
-                                            <Pagination
-                                                className="pagination-bar"
-                                                siblingCount={0}
-                                                totalCount={totalCount}
-                                                page={downloadsFileFilter.page}
-                                                limit={downloadsFileFilter.limit}
-                                                currentPageCount={exportedFilesList.length}
-                                                onChangePage={(pageNumber) => onChangePage(pageNumber)}
-                                                onChangePageLimit={(ev) => onChangeFilter(ev, "limit")}
-                                            />
                                         </table>
+                                        <Pagination
+                                            className="pagination-bar"
+                                            siblingCount={0}
+                                            totalCount={totalCount}
+                                            page={downloadsFileFilter.page}
+                                            limit={downloadsFileFilter.limit}
+                                            currentPageCount={exportedFilesList.length}
+                                            onChangePage={(pageNumber) => onChangePage(pageNumber)}
+                                            onChangePageLimit={(ev) => onChangeFilter(ev, "limit")}
+                                        />
                                     </section>
                                 </div>
                             </Dialog.Panel>
