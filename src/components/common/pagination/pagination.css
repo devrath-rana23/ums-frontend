@@ -32,7 +32,8 @@
 }
 
 .pagination-bar>.selected {
-  background: #cc730d;
+  --tw-bg-opacity: 1;
+  background: rgb(249 115 22 / var(--tw-bg-opacity));
   color: #fff;
 }
 
@@ -43,11 +44,13 @@
 .pagination-item {
   cursor: pointer;
   padding: 10px;
-  color: #cc730d;
+  --tw-bg-opacity: 1;
+  color: rgb(249 115 22 / var(--tw-bg-opacity));
 }
 
 .selected {
-  background: #cc730d;
+  --tw-bg-opacity: 1;
+  background: rgb(249 115 22 / var(--tw-bg-opacity));
   color: #fff;
 }
 
