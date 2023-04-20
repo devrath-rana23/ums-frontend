@@ -88,6 +88,10 @@ export const apiEndpoints = {
     url: "/v1/download/list",
     method: "get",
   },
+  deletedDownloadFile: {
+    url: "/v1/download/delete/:id",
+    method: "delete",
+  },
 };
 
 export const apiConstants = Object.keys(apiEndpoints).reduce((cb, iv) => {

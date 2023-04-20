@@ -52,6 +52,21 @@ export const ListExportedFilesModal = ({ closeExportFilesListModal = () => { }, 
         setDownloadsFileFilter(data);
     };
 
+    const deleteHandler = async (reqId) => {
+        const deleteDownloadedFileResponseData = await apiCall(apiConstants.deletedDownloadFile, {
+            loader: true,
+            params: { id: reqId },
+        })
+        if (deleteDownloadedFileResponseData?.status === 200) {
+            notify.success(deleteDownloadedFileResponseData?.message)
+            closeExportFilesListModal();
+            return;
+        } else if (deleteDownloadedFileResponseData?.status === 400) {
+            notify.error(deleteDownloadedFileResponseData?.message || constantText.SOMETHING_WENT_WRONG)
+            return;
+        }
+        notify.error(constantText.SOMETHING_WENT_WRONG);
+    }
 
     return (<>
         <Transition appear show={showListExportedFiles} as={Fragment}>
@@ -99,7 +114,7 @@ export const ListExportedFilesModal = ({ closeExportFilesListModal = () => { }, 
                                             <thead className="bg-orange-500 text-center">
                                                 <tr>
                                                     <th className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Name</th>
-                                                    <th className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Action</th>
+                                                    <th colSpan={2} className="px-6 py-3 not-italic font-medium text-xs leading-4 tracking-wider uppercase text-white">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -113,6 +128,15 @@ export const ListExportedFilesModal = ({ closeExportFilesListModal = () => { }, 
                                                         >
                                                             Download
                                                         </a></td>
+                                                        <td>
+                                                            <button
+                                                                type="button"
+                                                                className={`flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  ${item.id === constantText.admin || item.id === constantText.superadmin ? "bg-orange-100" : "bg-orange-500"} text-white`}
+                                                                onClick={() => deleteHandler(item.id)}
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </td>
                                                     </tr>
                                                 ))}
                                                 {!exportedFilesList.length > 0 && (
