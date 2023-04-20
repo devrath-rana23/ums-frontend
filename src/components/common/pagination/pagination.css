@@ -21,23 +21,22 @@
 }
 
 .pagination-nav-container {
-  display: flex;
   list-style: none;
 }
 
-.pagination-bar > .pagination-item {
+.pagination-bar>.pagination-item {
   background: #fff;
   border-left: 1px solid grey;
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
 }
 
-.pagination-bar > .selected {
+.pagination-bar>.selected {
   background: #cc730d;
   color: #fff;
 }
 
-.pagination-bar > .borderRight {
+.pagination-bar>.borderRight {
   border-right: 1px solid grey;
 }
 
@@ -56,14 +55,11 @@
   cursor: text;
 }
 
-.dots {
-  cursor: text;
-}
-
 @media screen and (max-width: 540px) {
   .page-limit-container {
     flex-direction: column;
   }
+
   .pagination-nav-container {
     margin: 0;
     padding: 0;

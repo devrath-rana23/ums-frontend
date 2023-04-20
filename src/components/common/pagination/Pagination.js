@@ -35,20 +35,20 @@ const Pagination = (props) => {
 
   let lastPage = paginationRange[paginationRange.length - 1];
   return (
-    <div className="pagination-container">
-      <div className="page-limit-container">
-        <select onChange={onChangePageLimit} className="page-limit">
+    <div className="flex justify-between items-center my-2.5">
+      <div className="page-limit-container flex gap-2.5">
+        <select onChange={onChangePageLimit} className="p-2.5">
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={50}>50</option>
           <option value={100}>100</option>
         </select>
-        <span className="page-limit-text">
+        <span className="text-center p-2.5">
           Showing {currentPageCount} of {totalCount} records
         </span>
       </div>
       <ul
-        className={classnames("pagination-nav-container", {
+        className={classnames("pagination-nav-container flex", {
           [className]: className,
         })}
       >
@@ -63,7 +63,7 @@ const Pagination = (props) => {
         {paginationRange.map((pageNumber, indexReq) => {
           if (pageNumber === DOTS) {
             return (
-              <li key={indexReq} className="pagination-item dots">
+              <li key={indexReq} className="pagination-item cursor-text">
                 &#8230;
               </li>
             );
