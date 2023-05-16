@@ -1,25 +1,26 @@
-import { useState } from "react";
-import { apiCall } from "../../utils/services/api/api";
-import { apiConstants } from "../../utils/services/api/apiEndpoints";
-import "./User.css";
-import { CreateSkillModal } from "../../components/user/CreateSkillModal";
-import { ListSkillModal } from "../../components/user/ListSkillModal";
-import { ListRoleModal } from "../../components/user/ListRoleModal";
-import { CreateRoleModal } from "../../components/user/CreateRoleModal";
-import { useAuth } from "../../hooks";
-import { constantText } from "../../utils/constants/ConstantText";
-import { UserFormModal } from "../../components/user/UserFormModal";
-import { notify } from "../../utils/services/notify/notify";
-import { ListExportedFilesModal } from "../../components/user/ListExportedFilesModal";
-import Pagination from "../../components/common/pagination/Pagination";
-import { useFetchApi } from "../../hooks/dataFetchingHooks/useFetchApi";
+import { useState } from "react"
+import { apiCall } from "../../utils/services/api/api"
+import { apiConstants } from "../../utils/services/api/apiEndpoints"
+import "./User.css"
+import { CreateSkillModal } from "../../components/user/CreateSkillModal"
+import { ListSkillModal } from "../../components/user/ListSkillModal"
+import { ListRoleModal } from "../../components/user/ListRoleModal"
+import { CreateRoleModal } from "../../components/user/CreateRoleModal"
+import { useAuth } from "../../hooks"
+import { constantText } from "../../utils/constants/ConstantText"
+import { UserFormModal } from "../../components/user/UserFormModal"
+import { notify } from "../../utils/services/notify/notify"
+import { ListExportedFilesModal } from "../../components/user/ListExportedFilesModal"
+import Pagination from "../../components/common/pagination/Pagination"
+import { useFetchApi } from "../../hooks/dataFetchingHooks/useFetchApi"
+import { createQueryParams } from "../../utils/Utils"
 
 export const User = () => {
-  const { user } = useAuth();
+  const { user } = useAuth()
   const [employeeFilter, setEmployeeFilter] = useState({
     page: 1,
     limit: 10,
-  });
+  })
 
   const employeesData = useFetchApi(
     apiConstants.employeeList,
@@ -31,85 +32,96 @@ export const User = () => {
         page: employeeFilter.page,
         limit: employeeFilter.limit,
       }),
-      loader: true
+      loader: true,
     }
   )
 
-  const [editEmployeesData, setEditEmployeesData] = useState({});
-  const [editSkillsData, setEditSkillsData] = useState({});
-  const [editRolesData, setEditRolesData] = useState({});
-  const [showCreateSkill, setShowCreateSkill] = useState(false);
-  const [showCreateRole, setShowCreateRole] = useState(false);
-  const [showListRole, setShowListRole] = useState(false);
-  const [showListSkill, setShowListSkill] = useState(false);
-  const [showListExportedFiles, setShowListExportedFiles] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const employeesExportDataResponse = useFetchApi(
+    apiConstants.exportEmployee,
+    {
+      revalidateIfStale: false,
+      revalidateOnMount: false,
+    },
+    {
+      loader: true,
+    }
+  )
+
+  const [editEmployeesData, setEditEmployeesData] = useState({})
+  const [editSkillsData, setEditSkillsData] = useState({})
+  const [editRolesData, setEditRolesData] = useState({})
+  const [showCreateSkill, setShowCreateSkill] = useState(false)
+  const [showCreateRole, setShowCreateRole] = useState(false)
+  const [showListRole, setShowListRole] = useState(false)
+  const [showListSkill, setShowListSkill] = useState(false)
+  const [showListExportedFiles, setShowListExportedFiles] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const onChangeFilter = (ev, type) => {
     const data = {
       ...employeeFilter,
       [type]: ev.target.value,
-    };
-    data.page = 1;
-    setEmployeeFilter(data);
+    }
+    data.page = 1
+    setEmployeeFilter(data)
     employeesData.mutate()
-  };
+  }
 
   const onChangePage = (pageNumber) => {
-    const data = { ...employeeFilter, page: pageNumber };
-    setEmployeeFilter(data);
+    const data = { ...employeeFilter, page: pageNumber }
+    setEmployeeFilter(data)
     employeesData.mutate()
-  };
+  }
 
   const openModal = () => {
-    setIsOpen(true);
+    setIsOpen(true)
   }
 
   const closeModal = () => {
-    setIsOpen(false);
-    setEditEmployeesData({});
+    setIsOpen(false)
+    setEditEmployeesData({})
   }
 
   const closeSkillModal = () => {
-    setShowCreateSkill(false);
-    setEditSkillsData({});
+    setShowCreateSkill(false)
+    setEditSkillsData({})
   }
 
   const openSkillModal = () => {
-    setShowCreateSkill(true);
+    setShowCreateSkill(true)
   }
 
   const closeRoleModal = () => {
-    setShowCreateRole(false);
+    setShowCreateRole(false)
     setEditRolesData({})
   }
 
   const openRoleModal = () => {
-    setShowCreateRole(true);
+    setShowCreateRole(true)
   }
 
   const openRoleListModal = () => {
-    setShowListRole(true);
+    setShowListRole(true)
   }
 
   const closeRoleListModal = () => {
-    setShowListRole(false);
+    setShowListRole(false)
   }
 
   const openSkillListModal = () => {
-    setShowListSkill(true);
+    setShowListSkill(true)
   }
 
   const closeSkillListModal = () => {
-    setShowListSkill(false);
+    setShowListSkill(false)
   }
 
   const openExportFilesListModal = () => {
-    setShowListExportedFiles(true);
+    setShowListExportedFiles(true)
   }
 
   const closeExportFilesListModal = () => {
-    setShowListExportedFiles(false);
+    setShowListExportedFiles(false)
   }
 
   const editHandler = async (userId) => {
@@ -118,16 +130,16 @@ export const User = () => {
       params: { id: userId },
     })
     if (editUserResponseData?.status === 200) {
-      setEditEmployeesData(editUserResponseData?.data);
-      openModal();
-      return;
+      setEditEmployeesData(editUserResponseData?.data)
+      openModal()
+      return
     } else if (editUserResponseData?.status === 400) {
-      setEditEmployeesData({});
+      setEditEmployeesData({})
       notify.error(editUserResponseData?.message || constantText.SOMETHING_WENT_WRONG)
-      return;
+      return
     }
-    setEditEmployeesData({});
-    notify.error(constantText.SOMETHING_WENT_WRONG);
+    setEditEmployeesData({})
+    notify.error(constantText.SOMETHING_WENT_WRONG)
   }
 
   const editSkillHandler = async (skillId) => {
@@ -136,16 +148,16 @@ export const User = () => {
       params: { id: skillId },
     })
     if (editSkillResponseData?.status === 200) {
-      setEditSkillsData(editSkillResponseData?.data);
-      openSkillModal();
-      return;
+      setEditSkillsData(editSkillResponseData?.data)
+      openSkillModal()
+      return
     } else if (editSkillResponseData?.status === 400) {
-      setEditSkillsData({});
+      setEditSkillsData({})
       notify.error(editSkillResponseData?.message || constantText.SOMETHING_WENT_WRONG)
-      return;
+      return
     }
-    setEditSkillsData({});
-    notify.error(constantText.SOMETHING_WENT_WRONG);
+    setEditSkillsData({})
+    notify.error(constantText.SOMETHING_WENT_WRONG)
   }
 
   const editRoleHandler = async (roleId) => {
@@ -154,16 +166,16 @@ export const User = () => {
       params: { id: roleId },
     })
     if (editRoleResponseData?.status === 200) {
-      setEditRolesData(editRoleResponseData?.data);
-      openRoleModal();
-      return;
+      setEditRolesData(editRoleResponseData?.data)
+      openRoleModal()
+      return
     } else if (editRoleResponseData?.status === 400) {
-      setEditRolesData({});
+      setEditRolesData({})
       notify.error(editRoleResponseData?.message || constantText.SOMETHING_WENT_WRONG)
-      return;
+      return
     }
-    setEditRolesData({});
-    notify.error(constantText.SOMETHING_WENT_WRONG);
+    setEditRolesData({})
+    notify.error(constantText.SOMETHING_WENT_WRONG)
   }
 
   const deleteHandler = async (userId) => {
@@ -174,26 +186,26 @@ export const User = () => {
     if (deleteUserResponseData?.status === 200) {
       notify.success(deleteUserResponseData?.message)
       setTimeout(() => {
-        window.location.reload();
+        window.location.reload()
       }, 500)
-      return;
+      return
     } else if (deleteUserResponseData?.status === 400) {
       notify.error(deleteUserResponseData?.message || constantText.SOMETHING_WENT_WRONG)
-      return;
+      return
     }
-    notify.error(constantText.SOMETHING_WENT_WRONG);
+    notify.error(constantText.SOMETHING_WENT_WRONG)
   }
 
-  const handleDownload = async () => {
-    const employeesExportDataResponse = await apiCall(apiConstants.exportEmployee, { loader: true });
-    if (employeesExportDataResponse?.status === 200) {
-      notify.success(employeesExportDataResponse?.message)
-      return;
-    } else if (employeesExportDataResponse?.status === 400) {
-      notify.error(employeesExportDataResponse?.message || constantText.SOMETHING_WENT_WRONG)
-      return;
+  const handleDownload = () => {
+    employeesExportDataResponse.mutate()
+    if (employeesExportDataResponse.data?.status === 200) {
+      notify.success(employeesExportDataResponse.data?.message)
+      return
+    } else if (employeesExportDataResponse.data?.status === 400) {
+      notify.error(employeesExportDataResponse.data?.message || constantText.SOMETHING_WENT_WRONG)
+      return
     }
-    notify.error(constantText.SOMETHING_WENT_WRONG);
+    notify.error(constantText.SOMETHING_WENT_WRONG)
   }
 
   if (employeesData.error) return <h1>Error....</h1>
@@ -286,7 +298,7 @@ export const User = () => {
             </tr>
           </thead>
           <tbody>
-            {employeesData.data.data.data && Array.isArray(employeesData.data.data.data) && employeesData.data.data.data.length > 0 &&
+            {employeesData.data?.data?.data && Array.isArray(employeesData.data.data.data) && employeesData.data.data.data.length > 0 &&
               employeesData.data.data.data.map((item, index) => (
                 <tr key={index} className="bg-[#ffffff90] border p-2.5 border-solid border-[#ddd]">
                   <td className="text-center p-5" data-label="Name">{item.name}</td>
@@ -333,10 +345,10 @@ export const User = () => {
         <Pagination
           className="pagination-bar"
           siblingCount={0}
-          totalCount={data?.data?.total || 0}
+          totalCount={employeesData.data?.data?.total || 0}
           page={employeeFilter.page}
           limit={employeeFilter.limit}
-          currentPageCount={employeesData.data.data.data.length}
+          currentPageCount={employeesData.data?.data?.data.length || 0}
           onChangePage={(pageNumber) => onChangePage(pageNumber)}
           onChangePageLimit={(ev) => onChangeFilter(ev, "limit")}
         />
@@ -348,5 +360,5 @@ export const User = () => {
       {showCreateRole && <CreateRoleModal closeRoleListModal={closeRoleListModal} editRolesData={editRolesData} showCreateRole={showCreateRole} closeRoleModal={closeRoleModal} />}
       {showListRole && <ListRoleModal editRoleHandler={editRoleHandler} showListRole={showListRole} closeRoleListModal={closeRoleListModal} />}
     </>
-  );
-};
+  )
+}
