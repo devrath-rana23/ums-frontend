@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { apiCall } from "../../utils/services/api/api";
 import { apiConstants } from "../../utils/services/api/apiEndpoints";
 import "./User.css";
@@ -12,7 +12,6 @@ import { UserFormModal } from "../../components/user/UserFormModal";
 import { notify } from "../../utils/services/notify/notify";
 import { ListExportedFilesModal } from "../../components/user/ListExportedFilesModal";
 import Pagination from "../../components/common/pagination/Pagination";
-import { createQueryParams } from "../../utils/Utils";
 import { useGetEmployeeData } from "../../hooks/dataFetchingHooks/useGetEmployeeData";
 import { Loader } from "../../components/common/Loader/Loader";
 
