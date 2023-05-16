@@ -196,13 +196,13 @@ export const User = () => {
     notify.error(constantText.SOMETHING_WENT_WRONG)
   }
 
-  const handleDownload = () => {
-    employeesExportDataResponse.mutate()
-    if (employeesExportDataResponse.data?.status === 200) {
-      notify.success(employeesExportDataResponse.data?.message)
+  const handleDownload = async () => {
+    const employeesExportDataResponseR = await employeesExportDataResponse.mutate()
+    if (employeesExportDataResponseR?.status === 200) {
+      notify.success(employeesExportDataResponseR?.message)
       return
-    } else if (employeesExportDataResponse.data?.status === 400) {
-      notify.error(employeesExportDataResponse.data?.message || constantText.SOMETHING_WENT_WRONG)
+    } else if (employeesExportDataResponseR?.status === 400) {
+      notify.error(employeesExportDataResponseR?.message || constantText.SOMETHING_WENT_WRONG)
       return
     }
     notify.error(constantText.SOMETHING_WENT_WRONG)
