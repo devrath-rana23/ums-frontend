@@ -318,9 +318,9 @@ export const User = () => {
                       <td className="text-center p-5" data-label="Action">
                         <button
                           type="button"
-                          className={`flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  ${![constantText.admin, constantText.superadmin].includes(item.role.id) ? "bg-orange-100" : "bg-orange-500"} text-white`}
+                          className={`flex flex-row justify-center items-center shadow-[0px_1px_2px_rgba(0,0,0,0.05)] px-[17px] py-[9px] rounded-md border-solid not-italic font-medium text-sm leading-5 border-transparent  ${!([constantText.admin, constantText.superadmin].includes(item.role.id) && user?.user?.id !== item?.employee?.user_id) ? "bg-orange-100" : "bg-orange-500"} text-white`}
                           onClick={() => deleteHandler(item.id)}
-                          disabled={![constantText.admin, constantText.superadmin].includes(item.role.id) && user?.user?.id !== item.id}
+                          disabled={!([constantText.admin, constantText.superadmin].includes(item.role.id) && user?.user?.id !== item?.employee?.user_id)}
                         >
                           Delete
                         </button>
