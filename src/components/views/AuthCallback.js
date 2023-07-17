@@ -19,7 +19,7 @@ export const AuthCallback = () => {
     const params = Object.fromEntries(new URLSearchParams(location.search));
     const authCallbackDataRes = await apiCall(apiConstants.authCallback, {
       loader: true,
-      queryParams: params,
+      body: params,
     });
     if (authCallbackDataRes?.status === 200) {
       setUser(authCallbackDataRes || "");
