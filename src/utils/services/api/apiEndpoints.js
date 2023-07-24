@@ -7,6 +7,7 @@ export const apiEndpoints = {
   authCallback: {
     url: "/v1/auth/callback",
     method: "post",
+    instance: "i2",
   },
   authLogout: {
     url: "/v1/auth/logout",

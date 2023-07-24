@@ -14,6 +14,9 @@ const axiosInstances = {
   i1: axios.create({
     baseURL: config.baseUrl,
   }),
+  i2: axios.create({
+    baseURL: config.baseUrlTwo,
+  }),
 };
 
 export const apiCall = (apiEndpointName, options) => {
