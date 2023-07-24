@@ -32,7 +32,7 @@ export const apiCall = (apiEndpointName, options) => {
   }
 
   const config = JSON.parse(JSON.stringify(apiEndpoints[apiEndpointName]));
-
+console.log("config>>>",config)
   //Inject params here.
   if (params) {
     config.url = injectParams(config.url, params);
@@ -42,6 +42,8 @@ export const apiCall = (apiEndpointName, options) => {
     config.url = injectQueryParams(config.url, queryParams);
   }
   const axiosInstance = axiosInstances[config.instance] || axiosInstances.i1;
+console.log("axiosInstance>>>",axiosInstance,body)
+
   showHideLoader(loader, true);
   return axiosInstance({
     method: config.method, url: config.url, data: body,
