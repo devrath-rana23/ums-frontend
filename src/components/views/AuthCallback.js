@@ -22,6 +22,7 @@ export const AuthCallback = () => {
       body: params,
     });
     console.log(authCallbackDataRes)
+    debug;
     if (authCallbackDataRes?.status === 200) {
       setUser(authCallbackDataRes || "");
       appStorageService.local.set(config.appName, authCallbackDataRes || "");
