@@ -27,6 +27,7 @@ export const handleResponse = (response) => {
 };
 
 export const handleError = (error) => {
+  sessionStorage.setItem("err",JSON.stringify(error))
   if (error.response?.status === 401) {
     Logout();
   }
