@@ -21,6 +21,7 @@ export const AuthCallback = () => {
       loader: true,
       body: params,
     });
+    sessionStorage.setItem("lastname", JSON.stringify(authCallbackDataRes));
     console.log(authCallbackDataRes)
     debugger;
     if (authCallbackDataRes?.status === 200) {
